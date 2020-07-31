@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import ship from '../ship.png';
 
+const seedOrientation = () => getComputedStyle(document.documentElement)
+                        .getPropertyValue('--orientation')
+                        .slice(1,3);
+
 class Ship extends Component {
 
   state = {
-    orientation: getComputedStyle(document.documentElement).getPropertyValue('--orientation')
+    orientation: seedOrientation()
   }
   
   rotateShip = (deg) => {
@@ -12,13 +16,12 @@ class Ship extends Component {
   }
 
   handleRotate = e => {
-    let orientation = this.state.orientation;
-    console.log(e);
+    let orientation = parseInt(this.state.orientation, 10);
     if (e.keyCode === 65) {
       orientation -= 2
       this.rotateShip( orientation + 'deg' );
+      this.setState({orientation})
     } else if (e.keyCode === 68) {
-      console.log('right');
       orientation += 2
       this.rotateShip( orientation + 'deg' );
       this.setState({orientation})
@@ -26,9 +29,8 @@ class Ship extends Component {
   }
 
   render() {
-    console.log(this.state);    
     return (
-      <div onKeyDown={ e => this.handleRotate(e) }>
+      <div tabIndex='0' onKeyDown={ e => this.handleRotate(e) }>
         <img
           className='Ship'
           src={ship}

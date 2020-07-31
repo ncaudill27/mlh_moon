@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import ship from '../ship.png';
 
-const seedOrientation = () => getComputedStyle(document.documentElement)
-                              .getPropertyValue('--orientation')
-                              .slice(1,3);
+const seedOrientation = () => {
+  const rootOrientation = getComputedStyle(document.documentElement)
+  .getPropertyValue('--orientation')
+  .slice(1,3)
+  return parseInt(rootOrientation, 10);
+}
 
 // establish 
 class Ship extends Component {
@@ -18,14 +21,47 @@ class Ship extends Component {
     document.documentElement.style.setProperty('--orientation', deg);
   }
 
-  accelerateShip = () => {
-    let {top, left} = this.state;
-    window.scroll({top: top += 90, left: left += 90, behavior: 'smooth'});
+  setShipPosition = (top, left) => {
+    if (left < 0) left = 0;
+    if (top < 0) top = 0;
     this.setState({top, left});
   }
 
+  accelerateShip = orientation => {
+
+    let {top, left} = this.state;
+    console.log('Moving', this.state);
+    switch (true) {
+
+      case (0 <= orientation && orientation <= 90):
+        console.log('at 90');
+        window.scroll({top: top -= 90-orientation, left: left += orientation , behavior: 'smooth'});
+        this.setShipPosition(top, left);
+        break;
+
+      case (90 < orientation && orientation <= 180):
+        window.scroll({top: top += orientation-90, left: left += 180-orientation , behavior: 'smooth'});
+        this.setShipPosition(top, left);
+        break;
+
+      case (180 < orientation && orientation <= 270):
+        window.scroll({top: top -= orientation-270, left: left += orientation-270 , behavior: 'smooth'});
+        this.setShipPosition(top, left);
+        break;
+
+      case ( 270 < orientation && orientation <= 359):
+        window.scroll({top: top -= 360-orientation, left: left += orientation-360 , behavior: 'smooth'});
+        this.setShipPosition(top, left);
+        break;
+
+      default:
+        break;
+    }
+  }
+
   handleMovement = e => {
-    let orientation = parseInt(this.state.orientation, 10);
+    let orientation = this.state.orientation;
+    console.log('Handle movt', this.state);
     if (e.keyCode === 65) {
       orientation = this.maintainOrientation(orientation - 2);
       this.rotateShip( orientation + 'deg' );
@@ -35,7 +71,7 @@ class Ship extends Component {
       this.rotateShip( orientation + 'deg' );
       this.setState({orientation})
     } else if (e.keyCode === 87) {
-      this.accelerateShip();
+      this.accelerateShip(orientation);
     }
   }
 

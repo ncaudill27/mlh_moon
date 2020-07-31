@@ -33,7 +33,6 @@ class Ship extends Component {
           className='Ship'
           src={ship}
           alt='Ship'
-          tabIndex='0'
           onClick={ e => console.log(e) }
         />
       </div>

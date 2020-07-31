@@ -1,0 +1,17 @@
+:root {
+  --orientation: 180deg;
+}
+
+.Universe {
+  display: block;
+}
+
+.Ship {
+  width: 100px;
+  height: auto;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: rotate(var(--orientation));
+}

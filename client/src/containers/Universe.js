@@ -9,9 +9,16 @@ class Universe extends Component {
     
     // Creating the array elements for Planets
 
-    // state={
-    //     planetsArray:[]
-    // }
+    state={
+        // planetsArray:[],
+        shipBoundaries: {}
+    }
+
+    findShip = shipBoundaries => {
+      this.setState({
+        shipBoundaries
+      });
+    }
 
     // createPlanet=()=>{
     //     const planet={
@@ -49,9 +56,10 @@ class Universe extends Component {
 
     
   render() {
+    console.log(this.state);
     return (
       <div className="Universe">
-        <Ship />
+        <Ship findShip={this.findShip} />
       </div>
     )
   }

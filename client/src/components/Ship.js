@@ -16,6 +16,15 @@ class Ship extends Component {
     top: document.documentElement.clientTop,
     left: document.documentElement.clientLeft
   }
+
+  shipBoundaries = () => {
+    const ship = document.querySelector('.Ship');
+    const leftBound = ship.getBoundingClientRect().left;
+    const topBound = ship.getBoundingClientRect().top;
+    const rightBound = ship.getBoundingClientRect().right;
+    const bottomBound = ship.getBoundingClientRect().bottom;
+    return { leftBound, topBound, rightBound, bottomBound};
+  }
   
   rotateShip = (deg) => {
     document.documentElement.style.setProperty('--orientation', deg);
@@ -25,6 +34,7 @@ class Ship extends Component {
     if (left < 0) left = 0;
     if (top < 0) top = 0;
     this.setState({top, left});
+    this.props.findShip(this.shipBoundaries());
   }
 
   accelerateShip = orientation => {

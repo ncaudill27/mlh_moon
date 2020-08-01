@@ -27,3 +27,21 @@
   width: 200px;
   border-radius: 50%;
 }
+
+.HUD {
+  position: fixed;
+  bottom: 0px;
+}
+.Status-bar {
+  position: relative;
+  bottom: 0px;
+}
+
+.Status-bar:nth-of-type(2) {
+  bottom: 50px;
+}
+
+.Status-bar:nth-of-type(3) {
+  bottom: 100px;
+}
+

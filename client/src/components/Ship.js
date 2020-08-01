@@ -19,7 +19,7 @@ class Ship extends Component {
 
   shipBoundaries = () => {
     const ship = document.querySelector('.Ship');
-    return ship.getBoundingClientRect()
+    return ship.getBoundingClientRect();
   }
   
   rotateShip = (deg) => {

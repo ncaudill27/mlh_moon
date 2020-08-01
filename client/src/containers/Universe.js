@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Ship from '../components/Ship';
 import Planet from '../components/Planet';
+import StatusBar from '../components/StatusBar';
 
 function randomNumber(min, max) {  
     return Math.floor(Math.random() * (max - min) + min); 
@@ -8,17 +9,33 @@ function randomNumber(min, max) {
 
 class Universe extends Component {
     
-    // Creating the array elements for Planets
-
     state={
-        planetsArray:[],
-        shipBoundaries: {},
-        planetBoundaries: []
+      planetsArray:[],
+      shipBoundaries: {},
+      planetBoundaries: [],
+      medicine: 1000,
+      food: 1000,
+      water: 1000
+    }
+
+    decayResources = () => {
+      this.setState( prevState => ({
+        medicine: prevState.medicine - 25,
+        food: prevState.medicine - 25,
+        water: prevState.medicine - 25,
+      }));
     }
 
     componentDidMount = async () => {
       await this.generatePlanets(this.createPlanet, 80);
       this.calcPlanetBoundaries();
+      this.decayId = setInterval(() => {
+        this.decayResources()
+      }, 1000);
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.decayId);
     }
 
     findShip = shipBoundaries => {
@@ -108,6 +125,11 @@ class Universe extends Component {
       <div className="Universe">
         <Ship findShip={this.findShip} />
         { this.state.planetsArray.length ? this.renderPlanets() : null }
+      <div className="HUD">
+        <StatusBar resource='medicine' amount={this.state.medicine} />
+        <StatusBar resource='water' amount={this.state.water} />
+        <StatusBar resource='food' amount={this.state.food} />
+      </div>
       </div>
     )
   }

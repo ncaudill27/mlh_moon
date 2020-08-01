@@ -70,22 +70,22 @@ class Ship extends Component {
     const Wkey = e.keyCode === 87;
 
     if (Akey) {
-      orientation = this.maintainOrientation(orientation - 2);
+      orientation = this.maintainOrientation(orientation - 10);
       this.rotateShip( orientation + 'deg' );
       this.setState({orientation})
     } else if (Dkey) {
-      orientation = this.maintainOrientation(orientation + 2);
+      orientation = this.maintainOrientation(orientation + 10);
       this.rotateShip( orientation + 'deg' );
       this.setState({orientation})
     } else if (Wkey) {
       this.accelerateShip(orientation);
     } else if (Wkey && Dkey) {
-      orientation = this.maintainOrientation(orientation + 2);
+      orientation = this.maintainOrientation(orientation + 10);
       this.rotateShip( orientation + 'deg' );
       this.setState({orientation});
       this.accelerateShip(orientation);
     } else if (Wkey && Akey) {
-      orientation = this.maintainOrientation(orientation - 2);
+      orientation = this.maintainOrientation(orientation - 10);
       this.rotateShip( orientation + 'deg' );
       this.setState({orientation})
       this.accelerateShip(orientation);

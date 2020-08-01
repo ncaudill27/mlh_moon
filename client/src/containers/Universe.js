@@ -61,6 +61,7 @@ class Universe extends Component {
       this.calcPlanetBoundaries();
       this.state.planetBoundaries.map( planet => {
         this.findCollision(shipBoundaries, planet);
+        this.stopTransfer(planet);
       });
 
       this.setState({
@@ -68,22 +69,28 @@ class Universe extends Component {
       });
     }
 
+    isDepleted = planet => planet.water < 1 && planet.food < 1 && planet.medicine < 1;
+    
     beginTransfer = planet => {
       planet = this.state.planetsArray.find( p => p.id === planet.id );
-      this.transferId = setInterval(() => {
+      planet.transferId = this.isDepleted(planet) ? null : setInterval(() => {
         this.transferResources(planet);
       }, 250);
+      console.log(planet.transferId);
     }
 
+    stopTransfer = planet => {
+      if (this.isDepleted(planet)) {
+        console.log('Clear interval');
+        clearInterval(planet.transferId);
+        return;
+      }
+    }
     transferResources = planet => {
       const waterTransferred = planet.water * 0.1
       const foodTransferred = planet.food * 0.1
       const medicineTransferred = planet.medicine * 0.1
 
-      if (waterTransferred < 1 && foodTransferred < 1 && medicineTransferred < 1) {
-        clearInterval(this.transferId);
-        return;
-      }
       // lower planet's colors
       planet.water -= waterTransferred;
       planet.food -= foodTransferred;

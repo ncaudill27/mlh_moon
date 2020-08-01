@@ -116,7 +116,6 @@ class Universe extends Component {
             boundaries[key] = planetBounds[key]
           }
         }
-        console.log(boundaries);
         return Object.assign({}, {id: planet.id}, boundaries)
       });
 
@@ -139,7 +138,6 @@ class Universe extends Component {
     }
 
     generatePlanets = (func, times) => {
-      console.log(times);
       if (times === 0) return;
       func(times);
       return this.generatePlanets(func, --times);
@@ -168,7 +166,6 @@ class Universe extends Component {
 
     
   render() {
-    console.log(this.state);
     return (
       <div className="Universe">
         <Ship findShip={this.findShip} />

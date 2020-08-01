@@ -36,7 +36,6 @@ class Ship extends Component {
   accelerateShip = orientation => {
 
     let {top, left} = this.state;
-    console.log('Moving', this.state);
     switch (true) {
 
       case (0 <= orientation && orientation <= 90):
@@ -66,7 +65,6 @@ class Ship extends Component {
 
   handleMovement = e => {
     let orientation = this.state.orientation;
-    console.log('Handle movt', this.state);
     const Akey = e.keyCode === 65;
     const Dkey = e.keyCode === 68;
     const Wkey = e.keyCode === 87;
@@ -104,7 +102,6 @@ class Ship extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div tabIndex='0' onKeyDown={this.handleMovement}>
         <img

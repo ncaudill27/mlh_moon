@@ -45,7 +45,7 @@ class Ship extends Component {
 
       case (0 <= orientation && orientation <= 90):
         console.log('at 90');
-        window.scroll({top: top -= 90-orientation, left: left += 90-orientation , behavior: 'smooth'});
+        window.scroll({top: top -= 90-orientation, left: left += orientation , behavior: 'smooth'});
         this.setShipPosition(top, left);
         break;
 
@@ -72,15 +72,29 @@ class Ship extends Component {
   handleMovement = e => {
     let orientation = this.state.orientation;
     console.log('Handle movt', this.state);
-    if (e.keyCode === 65) {
+    const Akey = e.keyCode === 65;
+    const Dkey = e.keyCode === 68;
+    const Wkey = e.keyCode === 87;
+
+    if (Akey) {
       orientation = this.maintainOrientation(orientation - 2);
       this.rotateShip( orientation + 'deg' );
       this.setState({orientation})
-    } else if (e.keyCode === 68) {
+    } else if (Dkey) {
       orientation = this.maintainOrientation(orientation + 2);
       this.rotateShip( orientation + 'deg' );
       this.setState({orientation})
-    } else if (e.keyCode === 87) {
+    } else if (Wkey) {
+      this.accelerateShip(orientation);
+    } else if (Wkey && Dkey) {
+      orientation = this.maintainOrientation(orientation + 2);
+      this.rotateShip( orientation + 'deg' );
+      this.setState({orientation});
+      this.accelerateShip(orientation);
+    } else if (Wkey && Akey) {
+      orientation = this.maintainOrientation(orientation - 2);
+      this.rotateShip( orientation + 'deg' );
+      this.setState({orientation})
       this.accelerateShip(orientation);
     }
   }

@@ -10,7 +10,7 @@ function randomNumber(min, max) {
 class Universe extends Component {
     
     state={
-      planetsArray:[],
+      planetsArray: [],
       shipBoundaries: {},
       planetBoundaries: [],
       medicine: 1000,
@@ -21,9 +21,9 @@ class Universe extends Component {
     losingCondition = () => {
       const { medicine, food, water } = this.state;
 
-      if (medicine === 0) return true;
-      if (food === 0) return true;
-      if (water === 0) return true;
+      if (medicine <= 0) return true;
+      if (food <= 0) return true;
+      if (water <= 0) return true;
 
       return false;
     }
@@ -34,22 +34,21 @@ class Universe extends Component {
     }
 
     decayResources = () => {
-
       if (this.losingCondition()) this.gameOver();
 
       this.setState( prevState => ({
         medicine: prevState.medicine - 25,
         food: prevState.medicine - 25,
         water: prevState.medicine - 25,
-      }), () => console.log(this.state));
+      }));
     }
 
     componentDidMount = async () => {
       await this.generatePlanets(this.createPlanet, 80);
       this.calcPlanetBoundaries();
       this.decayId = setInterval(() => {
-        this.decayResources()
-      }, 1000);
+        this.decayResources();
+      }, 1000)
     }
 
     componentWillUnmount() {
@@ -69,38 +68,46 @@ class Universe extends Component {
       });
     }
 
-    isDepleted = planet => planet.water < 1 && planet.food < 1 && planet.medicine < 1;
+    isDepleted = planet => planet.water < 10 && planet.food < 10 && planet.medicine < 10;
     
     beginTransfer = planet => {
+
       planet = this.state.planetsArray.find( p => p.id === planet.id );
-      planet.transferId = this.isDepleted(planet) ? null : setInterval(() => {
+      // exit function if planet lacks resources
+      if (this.isDepleted(planet)) return;
+
+      planet.transferId = setInterval(() => {
         this.transferResources(planet);
       }, 500);
-      console.log(planet.transferId);
     }
 
     stopTransfer = planet => {
       if (this.isDepleted(planet)) {
         console.log('Clear interval');
         clearInterval(planet.transferId);
-        return;
-      }
+        return; 
+      };
     }
+
     transferResources = planet => {
       const waterTransferred = planet.water * 0.05 + 2
       const foodTransferred = planet.food * 0.05 + 2
       const medicineTransferred = planet.medicine * 0.05 + 2
 
-      // lower planet's colors
+      // lower planet's colors/resources
       planet.water -= planet.type === 'water' ? waterTransferred * 2 : waterTransferred;
       planet.food -= planet.type === 'food' ? foodTransferred * 2 : foodTransferred;
       planet.medicine -= planet.type === 'medicine' ? medicineTransferred * 2 : medicineTransferred;
+
+      // stop transferResources from completing if planet isDepleted
+      if (this.isDepleted(planet)) return;
+      
       // raise user resources
       this.setState( prevState => ({
         water: prevState.water + waterTransferred,
         food: prevState.food + foodTransferred,
         medicine: prevState.medicine + medicineTransferred
-      }))
+      }), () => console.log('Transferring: ', this.state));
     }
 
     findCollision = (ship, planet) => {
@@ -130,7 +137,7 @@ class Universe extends Component {
     }
 
     createPlanet = id => {
-        const planet={
+        let planet = {
             water: Math.floor(Math.random() * 255) + 1,
             medicine: Math.floor(Math.random() * 255) + 1,
             food: Math.floor(Math.random() * 255) + 1,
@@ -139,6 +146,7 @@ class Universe extends Component {
             size: randomNumber(300, 700),
             id
         }
+        planet = this.planetType(planet);
         this.setState( prevState => ({
           planetsArray: [...prevState.planetsArray, planet]
         }));
@@ -152,7 +160,6 @@ class Universe extends Component {
 
     renderPlanets = () => {
       return this.state.planetsArray.map( p => {
-        p = this.planetType(p);
         return <Planet {...p} />;
       } );
     }

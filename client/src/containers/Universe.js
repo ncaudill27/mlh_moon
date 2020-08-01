@@ -54,6 +54,7 @@ class Universe extends Component {
 
     componentWillUnmount() {
       clearInterval(this.decayId);
+      clearInterval(this.transferId);
     }
 
     findShip = shipBoundaries => {
@@ -67,12 +68,41 @@ class Universe extends Component {
       });
     }
 
+    beginTransfer = planet => {
+      planet = this.state.planetsArray.find( p => p.id === planet.id );
+      this.transferId = setInterval(() => {
+        this.transferResources(planet);
+      }, 250);
+    }
+
+    transferResources = planet => {
+      const waterTransferred = planet.water * 0.1
+      const foodTransferred = planet.food * 0.1
+      const medicineTransferred = planet.medicine * 0.1
+
+      if (waterTransferred < 1 && foodTransferred < 1 && medicineTransferred < 1) {
+        clearInterval(this.transferId);
+        return;
+      }
+      // lower planet's colors
+      planet.water -= waterTransferred;
+      planet.food -= foodTransferred;
+      planet.medicine -= medicineTransferred;
+      // raise user resources
+      this.setState( prevState => ({
+        water: prevState.water + waterTransferred,
+        food: prevState.food + foodTransferred,
+        medicine: prevState.medicine + medicineTransferred
+      }))
+    }
+
     findCollision = (ship, planet) => {
       if (ship.x < planet.x + planet.width &&
         ship.x + ship.width > planet.x &&
         ship.y < planet.y + planet.height &&
         ship.y + ship.height > planet.y) {
         console.log(`Currently on plant ${planet.id}`);
+        this.beginTransfer(planet);
       }
     }
 

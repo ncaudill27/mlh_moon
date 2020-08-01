@@ -19,11 +19,7 @@ class Ship extends Component {
 
   shipBoundaries = () => {
     const ship = document.querySelector('.Ship');
-    const leftBound = ship.getBoundingClientRect().left;
-    const topBound = ship.getBoundingClientRect().top;
-    const rightBound = ship.getBoundingClientRect().right;
-    const bottomBound = ship.getBoundingClientRect().bottom;
-    return { leftBound, topBound, rightBound, bottomBound};
+    return ship.getBoundingClientRect()
   }
   
   rotateShip = (deg) => {
@@ -44,7 +40,6 @@ class Ship extends Component {
     switch (true) {
 
       case (0 <= orientation && orientation <= 90):
-        console.log('at 90');
         window.scroll({top: top -= 90-orientation, left: left += orientation , behavior: 'smooth'});
         this.setShipPosition(top, left);
         break;

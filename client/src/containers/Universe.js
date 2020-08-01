@@ -22,15 +22,37 @@ class Universe extends Component {
     }
 
     findShip = shipBoundaries => {
+      this.calcPlanetBoundaries();
+      this.state.planetBoundaries.map( planet => {
+        this.findCollision(shipBoundaries, planet);
+      });
+
       this.setState({
         shipBoundaries
       });
     }
 
+    findCollision = (ship, planet) => {
+      if (ship.x < planet.x + planet.width &&
+        ship.x + ship.width > planet.x &&
+        ship.y < planet.y + planet.height &&
+        ship.y + ship.height > planet.y) {
+        console.log(`Currently on plant ${planet.id}`);
+      }
+    }
+
     calcPlanetBoundaries = () => {
       const planetBoundaries = this.state.planetsArray.map( planet => {
-        planet = document.getElementById(planet.id);
-        return planet.getBoundingClientRect();
+        const planetDOM = document.getElementById(planet.id);
+        const planetBounds = planetDOM.getBoundingClientRect();
+        let boundaries = {}
+        for (let key in planetBounds) {
+          if(typeof planetBounds[key] !== 'function') {
+            boundaries[key] = planetBounds[key]
+          }
+        }
+        console.log(boundaries);
+        return Object.assign({}, {id: planet.id}, boundaries)
       });
 
       this.setState({planetBoundaries});

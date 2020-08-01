@@ -45,12 +45,12 @@ class Ship extends Component {
 
       case (0 <= orientation && orientation <= 90):
         console.log('at 90');
-        window.scroll({top: top -= 90-orientation, left: left += orientation , behavior: 'smooth'});
+        window.scroll({top: top -= 90-orientation, left: left += 90-orientation , behavior: 'smooth'});
         this.setShipPosition(top, left);
         break;
 
       case (90 < orientation && orientation <= 180):
-        window.scroll({top: top += orientation-90, left: left += 180-orientation , behavior: 'smooth'});
+        window.scroll({top: top += 180-orientation, left: left += 180-orientation , behavior: 'smooth'});
         this.setShipPosition(top, left);
         break;
 

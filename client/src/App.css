@@ -4,10 +4,12 @@
 
 .Universe {
   display: block;
+  position: relative;
 }
 
 .Ship {
   width: 100px;
+  z-index: 1;
   height: auto;
   text-align: center;
   position: fixed;

@@ -16,7 +16,7 @@ class Universe extends Component {
     }
 
     componentDidMount() {
-      this.generatePlanets(this.createPlanet, 40);
+      this.generatePlanets(this.createPlanet, 80);
     }
 
     findShip = shipBoundaries => {
@@ -30,7 +30,8 @@ class Universe extends Component {
             water: Math.floor(Math.random() * 255) + 1,
             medicine: Math.floor(Math.random() * 255) + 1,
             food: Math.floor(Math.random() * 255) + 1,
-            orbit: randomNumber(400, 1000),
+            top: randomNumber(700, 15000),
+            left: randomNumber(700, 15000),
             size: randomNumber(300, 700),
             id
         }

@@ -18,7 +18,25 @@ class Universe extends Component {
       water: 1000
     }
 
+    losingCondition = () => {
+      const { medicine, food, water } = this.state;
+
+      if (medicine === 0) return true;
+      if (food === 0) return true;
+      if (water === 0) return true;
+
+      return false;
+    }
+
+    gameOver = () => {
+      console.log('GAME OVER');
+      clearInterval(this.decayId);
+    }
+
     decayResources = () => {
+
+      if (this.losingCondition()) this.gameOver();
+
       this.setState( prevState => ({
         medicine: prevState.medicine - 25,
         food: prevState.medicine - 25,

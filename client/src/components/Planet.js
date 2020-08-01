@@ -8,9 +8,14 @@ function Planet({water, medicine, food, fuel, orbit, size, id}) {
   //   //   cleanup
   //   // };
   // }, []);
-
+  const planetStyle = {
+    backgroundColor: `rgb(${water}, ${medicine}, ${food})`,
+    width: `${size}px`,
+    height: `${size}px`,
+  }
+  
   return (
-    <div className="Planet" id={id} style={{backgroundColor: `cmyk(${water}, ${medicine}, ${food}, 0)`}}>
+    <div className="Planet" id={id} style={planetStyle}>
 
     </div>
   )

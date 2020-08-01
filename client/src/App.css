@@ -17,12 +17,11 @@
 }
 
 .Planet {
-  /* display: block; */
-  --color: 'color';
+  /* --color: 'color';
   --size: 'size';
-  background-color: var(--color);
+  background-color: var(--color); */
   height: 200px;
-  padding: 40px;
+  /* padding: 40px; */
   width: 200px;
   border-radius: 50%;
 }

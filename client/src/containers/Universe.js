@@ -27,11 +27,11 @@ class Universe extends Component {
 
     createPlanet = id => {
         const planet={
-            water: Math.floor(Math.random() * 100) + 1,
-            medicine: Math.floor(Math.random() * 100) + 1,
-            food: Math.floor(Math.random() * 100) + 1,
+            water: Math.floor(Math.random() * 255) + 1,
+            medicine: Math.floor(Math.random() * 255) + 1,
+            food: Math.floor(Math.random() * 255) + 1,
             orbit: randomNumber(400, 1000),
-            size: randomNumber(100, 400),
+            size: randomNumber(300, 700),
             id
         }
         this.setState( prevState => ({
@@ -73,7 +73,7 @@ class Universe extends Component {
     return (
       <div className="Universe">
         <Ship findShip={this.findShip} />
-        {this.renderPlanets()}
+        { this.state.planetsArray.length ? this.renderPlanets() : null }
       </div>
     )
   }

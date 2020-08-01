@@ -12,17 +12,28 @@ class Universe extends Component {
 
     state={
         planetsArray:[],
-        shipBoundaries: {}
+        shipBoundaries: {},
+        planetBoundaries: []
     }
 
-    componentDidMount() {
-      this.generatePlanets(this.createPlanet, 80);
+    componentDidMount = async () => {
+      await this.generatePlanets(this.createPlanet, 80);
+      this.calcPlanetBoundaries();
     }
 
     findShip = shipBoundaries => {
       this.setState({
         shipBoundaries
       });
+    }
+
+    calcPlanetBoundaries = () => {
+      const planetBoundaries = this.state.planetsArray.map( planet => {
+        planet = document.getElementById(planet.id);
+        return planet.getBoundingClientRect();
+      });
+
+      this.setState({planetBoundaries});
     }
 
     createPlanet = id => {

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Planet({water, medicine, food, top, left, size, id}) {
+
+  const [boundaries, setBoundaries] = useState({});
 
   const planetStyle = {
     backgroundColor: `rgb(${water}, ${medicine}, ${food})`,

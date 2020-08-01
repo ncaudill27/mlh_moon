@@ -44,17 +44,17 @@ class Ship extends Component {
         break;
 
       case (90 < orientation && orientation <= 180):
-        window.scroll({top: top += 180-orientation, left: left += 180-orientation , behavior: 'smooth'});
+        window.scroll({top: top += 90 - Math.abs(180 - orientation), left: left += 180-orientation , behavior: 'smooth'});
         this.setShipPosition(top, left);
         break;
 
       case (180 < orientation && orientation <= 270):
-        window.scroll({top: top -= orientation-270, left: left += orientation-270 , behavior: 'smooth'});
+        window.scroll({top: top += 270 - orientation, left: left -= 90 - Math.abs(270 - orientation) , behavior: 'smooth'});
         this.setShipPosition(top, left);
         break;
 
       case ( 270 < orientation && orientation <= 359):
-        window.scroll({top: top -= 360-orientation, left: left += orientation-360 , behavior: 'smooth'});
+        window.scroll({top: top -= 90 - Math.abs(360-orientation), left: left -= 90 - Math.abs(270 - orientation) , behavior: 'smooth'});
         this.setShipPosition(top, left);
         break;
 

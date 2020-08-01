@@ -5,7 +5,7 @@ function Planet({water, medicine, food, top, left, size, id}) {
   const [boundaries, setBoundaries] = useState({});
 
   const planetStyle = {
-    backgroundColor: `rgb(${water}, ${medicine}, ${food})`,
+    backgroundColor: `rgb(${medicine}, ${food}, ${water})`,
     width: `${size}px`,
     height: `${size}px`,
     position: 'absolute',

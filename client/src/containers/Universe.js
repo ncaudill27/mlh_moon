@@ -41,7 +41,7 @@ class Universe extends Component {
         medicine: prevState.medicine - 25,
         food: prevState.medicine - 25,
         water: prevState.medicine - 25,
-      }));
+      }), () => console.log(this.state));
     }
 
     componentDidMount = async () => {
@@ -75,7 +75,7 @@ class Universe extends Component {
       planet = this.state.planetsArray.find( p => p.id === planet.id );
       planet.transferId = this.isDepleted(planet) ? null : setInterval(() => {
         this.transferResources(planet);
-      }, 250);
+      }, 500);
       console.log(planet.transferId);
     }
 
@@ -87,14 +87,14 @@ class Universe extends Component {
       }
     }
     transferResources = planet => {
-      const waterTransferred = planet.water * 0.1
-      const foodTransferred = planet.food * 0.1
-      const medicineTransferred = planet.medicine * 0.1
+      const waterTransferred = planet.water * 0.05 + 2
+      const foodTransferred = planet.food * 0.05 + 2
+      const medicineTransferred = planet.medicine * 0.05 + 2
 
       // lower planet's colors
-      planet.water -= waterTransferred;
-      planet.food -= foodTransferred;
-      planet.medicine -= medicineTransferred;
+      planet.water -= planet.type === 'water' ? waterTransferred * 2 : waterTransferred;
+      planet.food -= planet.type === 'food' ? foodTransferred * 2 : foodTransferred;
+      planet.medicine -= planet.type === 'medicine' ? medicineTransferred * 2 : medicineTransferred;
       // raise user resources
       this.setState( prevState => ({
         water: prevState.water + waterTransferred,
@@ -151,7 +151,24 @@ class Universe extends Component {
     }
 
     renderPlanets = () => {
-      return this.state.planetsArray.map( p => <Planet {...p} /> );
+      return this.state.planetsArray.map( p => {
+        p = this.planetType(p);
+        return <Planet {...p} />;
+      } );
+    }
+
+    planetType = p => {
+      const values = { water: p.water, medicine: p.medicine, food: p.food}
+      let high = 0;
+      let type = null;
+      for (let key in values) {
+        if (values[key] > high) {
+          high = values[key];
+          type = key;
+        };
+      }
+
+      return {...p, type };
     }
 
 

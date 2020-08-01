@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url(./jake-weirick-Q_RBVFFXR_g-unsplash.jpg);
+  background-repeat: repeat;
   height: 400%;
   width: 400%;
 }

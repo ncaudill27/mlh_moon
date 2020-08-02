@@ -12,7 +12,7 @@ function randomNumber(min, max) {
 
 const music = new Howl({
 	src: [space_music],
-	autoplay: true,
+	// autoplay: true,
 	loop: true,
 	volume: 0.4
 });
@@ -68,7 +68,10 @@ class Universe extends Component {
 				score: this.state.score
 			})
 		}).then( res => res.json() )
-		.then( data => this.props.addHighScore(data));
+		.then( data => {
+			this.props.addHighScore(data);
+			this.props.toIntro();
+		});
 	}
 
 	decayResources = () => {

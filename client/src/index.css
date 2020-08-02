@@ -7,11 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-image: url(./jake-weirick-Q_RBVFFXR_g-unsplash.jpg);
   background-repeat: repeat;
-  height: 400%;
-  width: 400%;
 }
 
-html, .App, .Universe {
+.Universe {
   height: 400%;
   width: 400%;
 }

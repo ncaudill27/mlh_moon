@@ -31,8 +31,9 @@
   left: 50px;
 }
 
-.startbutton {
+#startbutton {
   background-color: blueviolet;
+  margin: 0 auto;
   border: none;
   padding: 20px;
   border-radius: 35px;
@@ -92,4 +93,27 @@
   bottom: 100px;
   left: 510px;
   font-size: 2em;
+}
+
+.intro {
+  display: flex;
+  background-color: #daca3c; 
+  width: 80%;
+  margin: 0 auto;
+  padding: 1em;
+  justify-content: space-evenly;
+}
+.copy {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.highscores {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.scores {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }

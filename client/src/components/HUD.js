@@ -13,7 +13,7 @@ function HUD({water, medicine, food}) {
 
 	return (
 		<div className='HUD'>
-			{ messageCondition() ? <h2 style={{color: 'red', margin: '0 auto'}}>"HURRY!! YOU'RE RUNNING LOW ON SUPPLIES!"</h2> : null }
+			{ messageCondition() ? <h2 id='warning'>HURRY!! YOU'RE RUNNING LOW ON SUPPLIES!</h2> : null }
 			<StatusBar resource='water' amount={water} />
 			<StatusBar resource='food' amount={food} />
 			<StatusBar resource='medicine' amount={medicine} />

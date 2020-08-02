@@ -12,7 +12,7 @@ function randomNumber(min, max) {
 
 const music = new Howl({
 	src: [space_music],
-	// autoplay: true,
+	autoplay: true,
 	loop: true,
 	volume: 0.4
 });
@@ -65,7 +65,7 @@ class Universe extends Component {
 	componentDidMount = async () => {
 		await this.generatePlanets(this.createPlanet, 80);
 		this.calcPlanetBoundaries();
-		this.decayId = setInterval(this.decayResources, 1000);
+		this.decayId = setInterval(this.decayResources, 100);
 		this.scoreId = setInterval(this.addPoint, 10);
 	}
 
@@ -201,6 +201,7 @@ class Universe extends Component {
 
 		return (
 			<div className="Universe">
+				<button id='mute' onClick={() => music.volume(0)}>MUTE</button>
 				<Ship findShip={this.findShip} />
 				{ this.state.planetsArray.length ? this.renderPlanets() : null }
 				<HUD water={water} food={food} medicine={medicine} />

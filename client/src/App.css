@@ -22,6 +22,24 @@
   border-radius: 50%;
 }
 
+.popup {
+  height: 300px;
+  width: 420px; 
+  background-color: #ffffff; 
+  position: fixed;
+  top:50px;
+  left: 50px;
+}
+
+.startbutton {
+  background-color: blueviolet;
+  border: none;
+  padding: 20px;
+  border-radius: 35px;
+  color: white;
+}
+
+
 .HUD {
   position: fixed;
   padding: 40px;

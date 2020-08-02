@@ -15,7 +15,7 @@ class App extends React.Component {
 
 	renderIntro=()=>{
 		return (this.state.view === "intro" ?
-			<div className="intro">
+		<div className="intro">
 			<h1>Welcome to Planet Hack!</h1>
 			<p> Greetings, hero! You are the last hope for humanity. Please, stay alive so we can reach for the stars.</p>
 			<p> Objectives: maintain resources by flying over planets.</p>

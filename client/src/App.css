@@ -19,29 +19,29 @@
 }
 
 .Planet {
-  /* --color: 'color';
-  --size: 'size';
-  background-color: var(--color); */
-  height: 200px;
-  /* padding: 40px; */
-  width: 200px;
   border-radius: 50%;
 }
 
 .HUD {
   position: fixed;
+  padding: 40px;
   bottom: 0px;
+  left: 19%;
+  width: 1000px;
+  height: 150px;
+  background-color: slategray;
 }
+
 .Status-bar {
-  position: relative;
-  bottom: 0px;
+  position: fixed;
+  bottom: 10px;
 }
 
 .Status-bar:nth-of-type(2) {
-  bottom: 50px;
+  bottom: 60px;
 }
 
 .Status-bar:nth-of-type(3) {
-  bottom: 100px;
+  bottom: 110px;
 }
 

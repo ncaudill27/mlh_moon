@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Ship from '../components/Ship';
 import Planet from '../components/Planet';
-import StatusBar from '../components/StatusBar';
+import HUD from '../components/HUD';
 
 function randomNumber(min, max) {  
 		return Math.floor(Math.random() * (max - min) + min); 
@@ -195,17 +195,15 @@ class Universe extends Component {
 
 
 
-		
+
 	render() {
+		const { water, food, medicine } = this.state;
+
 		return (
 			<div className="Universe">
 				<Ship findShip={this.findShip} />
 				{ this.state.planetsArray.length ? this.renderPlanets() : null }
-			<div className="HUD">
-				<StatusBar resource='medicine' amount={this.state.medicine} />
-				<StatusBar resource='water' amount={this.state.water} />
-				<StatusBar resource='food' amount={this.state.food} />
-			</div>
+				<HUD water={water} food={food} medicine={medicine} />
 			</div>
 		)
 	}

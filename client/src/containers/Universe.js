@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
+import { Howl, Howler } from 'howler';
+import space_music from '../space_music.mp3';
 import Ship from '../components/Ship';
 import Planet from '../components/Planet';
 import HUD from '../components/HUD';
 import GameOver from '../components/GameOver';
 
 function randomNumber(min, max) {
-		return Math.floor(Math.random() * (max - min) + min); 
+	return Math.floor(Math.random() * (max - min) + min); 
 }
+
+const music = new Howl({
+	src: [space_music],
+	// autoplay: true,
+	loop: true,
+	volume: 0.4
+});
 
 class Universe extends Component {
 
@@ -36,6 +45,7 @@ class Universe extends Component {
 		clearInterval(this.decayId);
 		clearInterval(this.scoreId);
 		this.setState({gameOver: true});
+		music.stop();
 	}
 
 	decayResources = () => {
@@ -55,13 +65,14 @@ class Universe extends Component {
 	componentDidMount = async () => {
 		await this.generatePlanets(this.createPlanet, 80);
 		this.calcPlanetBoundaries();
-		this.decayId = setInterval(this.decayResources, 100);
+		this.decayId = setInterval(this.decayResources, 1000);
 		this.scoreId = setInterval(this.addPoint, 10);
 	}
 
 	componentWillUnmount() {
 		clearInterval(this.decayId);
 		clearInterval(this.transferId);
+		clearInterval(this.scoreId);
 	}
 
 	findShip = shipBoundaries => {
@@ -82,7 +93,7 @@ class Universe extends Component {
 
 		planet = this.state.planetsArray.find( p => p.id === planet.id );
 		// exit function if planet lacks resources
-		if (this.isDepleted(planet)) return;
+		if ( this.isDepleted(planet) ) return;
 
 		planet.transferId = setInterval(() => {
 			this.transferResources(planet);
@@ -115,7 +126,7 @@ class Universe extends Component {
 			water: prevState.water + waterTransferred,
 			food: prevState.food + foodTransferred,
 			medicine: prevState.medicine + medicineTransferred
-		}), () => console.log('Transferring: ', this.state));
+		}));
 	}
 
 	findCollision = (ship, planet) => {
@@ -123,8 +134,7 @@ class Universe extends Component {
 			ship.x + ship.width > planet.x &&
 			ship.y < planet.y + planet.height &&
 			ship.y + ship.height > planet.y) {
-			console.log(`Currently on plant ${planet.id}`);
-			this.beginTransfer(planet);
+			if (planet.transferId === undefined) this.beginTransfer(planet);
 		}
 	}
 

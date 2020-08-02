@@ -8,7 +8,6 @@ const seedOrientation = () => {
 	return parseInt(rootOrientation, 10);
 }
 
-// establish 
 class Ship extends Component {
 
 	state = {

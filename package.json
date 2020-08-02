@@ -1,0 +1,24 @@
+{
+  "name": "hack-the-planet",
+  "version": "1.0.0",
+  "description": "To the Moon and Hack Submission",
+  "main": "client/src/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "cd client && npm install && npm run build && cd ..",
+    "deploy": "cp -a client/build/. public/",
+    "postinstall": "npm run build && npm run deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ncaudill27/mlh_moon.git"
+  },
+  "author": "Nelson Caudill <nelson.a.caudill@gmail.com> & William Lin <willlin1996@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ncaudill27/mlh_moon/issues"
+  },
+  "homepage": "https://github.com/ncaudill27/mlh_moon#readme"
+}

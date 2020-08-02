@@ -2,20 +2,23 @@ import React, { Component } from 'react';
 import Ship from '../components/Ship';
 import Planet from '../components/Planet';
 import HUD from '../components/HUD';
+import GameOver from '../components/GameOver';
 
 function randomNumber(min, max) {
 		return Math.floor(Math.random() * (max - min) + min); 
 }
 
 class Universe extends Component {
-		
+
 	state={
+		gameOver: false,
 		planetsArray: [],
 		shipBoundaries: {},
 		planetBoundaries: [],
 		medicine: 1000,
 		food: 1000,
-		water: 1000
+		water: 1000,
+		score: 0
 	}
 
 	losingCondition = () => {
@@ -31,6 +34,8 @@ class Universe extends Component {
 	gameOver = () => {
 		console.log('GAME OVER');
 		clearInterval(this.decayId);
+		clearInterval(this.scoreId);
+		this.setState({gameOver: true});
 	}
 
 	decayResources = () => {
@@ -43,12 +48,15 @@ class Universe extends Component {
 		}));
 	}
 
+	addPoint = () => this.setState( prevState => ({
+		score: prevState.score + 1
+	}));
+
 	componentDidMount = async () => {
 		await this.generatePlanets(this.createPlanet, 80);
 		this.calcPlanetBoundaries();
-		this.decayId = setInterval(() => {
-			this.decayResources();
-		}, 1000)
+		this.decayId = setInterval(this.decayResources, 100);
+		this.scoreId = setInterval(this.addPoint, 10);
 	}
 
 	componentWillUnmount() {
@@ -137,19 +145,19 @@ class Universe extends Component {
 	}
 
 	createPlanet = id => {
-			let planet = {
-					water: Math.floor(Math.random() * 255) + 1,
-					medicine: Math.floor(Math.random() * 255) + 1,
-					food: Math.floor(Math.random() * 255) + 1,
-					top: randomNumber(700, 15000),
-					left: randomNumber(700, 15000),
-					size: randomNumber(300, 700),
-					id
-			}
-			planet = this.planetType(planet);
-			this.setState( prevState => ({
-				planetsArray: [...prevState.planetsArray, planet]
-			}));
+		let planet = {
+				water: Math.floor(Math.random() * 255) + 1,
+				medicine: Math.floor(Math.random() * 255) + 1,
+				food: Math.floor(Math.random() * 255) + 1,
+				top: randomNumber(700, 15000),
+				left: randomNumber(700, 15000),
+				size: randomNumber(300, 700),
+				id
+		}
+		planet = this.planetType(planet);
+		this.setState( prevState => ({
+			planetsArray: [...prevState.planetsArray, planet]
+		}));
 	}
 
 	generatePlanets = (func, times) => {
@@ -178,24 +186,6 @@ class Universe extends Component {
 		return { ...p, type };
 	}
 
-
-		// Rendering Planet
-
-		// 1) Create a circle 
-		// css borderradius 50%
-
-		// 2) With the circle, add color with CMYK
-		// Cyan---C 255 is to 100% aka 255 for water
-		// Magenta---M 255 etc 
-
-		// 3) flex wrap inline wrap
-
-		// 4) padding to the planets based on orbit number
-
-
-
-
-
 	render() {
 		const { water, food, medicine } = this.state;
 
@@ -204,6 +194,7 @@ class Universe extends Component {
 				<Ship findShip={this.findShip} />
 				{ this.state.planetsArray.length ? this.renderPlanets() : null }
 				<HUD water={water} food={food} medicine={medicine} />
+				{ this.state.gameOver ? <GameOver score={this.state.score} /> : null }
 			</div>
 		)
 	}

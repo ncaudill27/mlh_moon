@@ -50,3 +50,14 @@
   bottom: 70px;
 }
 
+.Game-over {
+  position: fixed;
+  padding: 40px;
+  height: fit-content;
+  width: fit-content; 
+  background-color: #97ceaa;
+  border-radius: 10px;
+  top: 150px;
+  left: 43%;
+}
+

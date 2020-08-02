@@ -8,7 +8,7 @@ function StatusBar({resource, amount}) {
 				return 'red';
 
 			case 'water':
-				return 'blue';
+				return 'cyan';
 			
 			case 'food':
 				return 'yellow';
@@ -29,12 +29,19 @@ function StatusBar({resource, amount}) {
 		height: '20px'
 	}
 
+	const labelStyle = {
+		padding:'0 5px',
+		margin:'0',
+		color: 'black',
+	}
+
+
 	// create function to display message when < certain size;
 	// give bar a measurement
 
 	return (
 		<div className="Status-bar" style={statusStyle}>
-
+			<p style={labelStyle}>{resource.charAt(0).toUpperCase() + resource.slice(1)}</p>
 		</div>
 	);
 }

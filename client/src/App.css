@@ -28,20 +28,25 @@
   bottom: 0px;
   left: 19%;
   width: 1000px;
-  height: 150px;
+  height: 100px;
   background-color: slategray;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .Status-bar {
+  display: flex;
   position: fixed;
   bottom: 10px;
+  justify-content: flex-end;
+  overflow: hidden;
 }
 
 .Status-bar:nth-of-type(2) {
-  bottom: 60px;
+  bottom: 40px;
 }
 
 .Status-bar:nth-of-type(3) {
-  bottom: 110px;
+  bottom: 70px;
 }
 

@@ -3,9 +3,9 @@ import Ship from '../components/Ship';
 import Planet from '../components/Planet';
 import HUD from '../components/HUD';
 
-function randomNumber(min, max) {  
+function randomNumber(min, max) {
 		return Math.floor(Math.random() * (max - min) + min); 
-}  
+}
 
 class Universe extends Component {
 		
@@ -175,7 +175,7 @@ class Universe extends Component {
 			};
 		}
 
-		return {...p, type };
+		return { ...p, type };
 	}
 
 

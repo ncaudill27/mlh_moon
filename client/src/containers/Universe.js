@@ -54,7 +54,9 @@ class Universe extends Component {
 		return this.props.highScores.length ? this.props.highScores.some( s => this.state.score > s.score ) : true;
 	}
 
-	submitHighScore = name => {
+	submitHighScore = (name, e) => {
+		e.preventDefault();
+
 		fetch('/api/v1/high_scores', {
 			'method': 'POST',
 			'headers': {
@@ -63,7 +65,7 @@ class Universe extends Component {
 			},
 			'body': JSON.stringify({
 				name,
-				high_score: this.state.score
+				score: this.state.score
 			})
 		}).then( res => res.json() )
 		.then( data => this.props.addHighScore(data));
@@ -226,7 +228,7 @@ class Universe extends Component {
 				<Ship findShip={this.findShip} />
 				{ this.state.planetsArray.length ? this.renderPlanets() : null }
 				<HUD water={water} food={food} medicine={medicine} />
-				{ this.state.gameOver ? <GameOver score={this.state.score} isHighScore={this.state.isHighScore} /> : null }
+				{ this.state.gameOver ? <GameOver score={this.state.score} isHighScore={this.state.isHighScore} submitHighScore={this.submitHighScore} /> : null }
 			</div>
 		)
 	}

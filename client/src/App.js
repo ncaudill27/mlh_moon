@@ -21,7 +21,7 @@ class App extends Component {
 
 	addHighScore = highScore => {
 		const highScores = this.state.highScores.concat(highScore);
-		highScores.sort( (a, b) => a.high_score > b.highScore );
+		highScores.sort( (a, b) => a.score > b.score );
 		highScores.slice(0, 11);
 		this.setState({highScores});
 	}

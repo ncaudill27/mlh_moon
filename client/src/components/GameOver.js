@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function GameOver({score, isHighScore}) {
+function GameOver({score, isHighScore, submitHighScore}) {
+
+  const [name, setName] = useState('');
+
+  const handleChange = () => {
+    const name = document.getElementById('name').value;
+    setName(name);
+  }
 
   const refreshPage = () => window.history.go(0);
 
   const message = isHighScore ? "HIGH SCORE!!!" : "GAME OVER"
 
-  const highScoreForm = <form>
+  const highScoreForm = <form onSubmit={ e => submitHighScore(name, e) }>
     <label>Name</label>
-    <input type='text' name='name'></input>
+    <input id='name' type='text' name='name' value={name} onChange={handleChange}></input>
     <input type='hidden' name='score' value={score} />
     <input type='submit' />
   </form>

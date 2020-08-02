@@ -27,7 +27,8 @@ class Universe extends Component {
 		medicine: 1000,
 		food: 1000,
 		water: 1000,
-		score: 0
+		score: 0,
+		isHighScore: false
 	}
 
 	losingCondition = () => {
@@ -46,6 +47,26 @@ class Universe extends Component {
 		clearInterval(this.scoreId);
 		this.setState({gameOver: true});
 		music.stop();
+		if (this.isHighScore) this.setState({isHighScore: true});
+	}
+
+	isHighScore = () => {
+		return this.props.highScores.length ? this.props.highScores.some( s => this.state.score > s.score ) : true;
+	}
+
+	submitHighScore = name => {
+		fetch('/api/v1/high_scores', {
+			'method': 'POST',
+			'headers': {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			},
+			'body': JSON.stringify({
+				name,
+				high_score: this.state.score
+			})
+		}).then( res => res.json() )
+		.then( data => this.props.addHighScore(data));
 	}
 
 	decayResources = () => {
@@ -205,7 +226,7 @@ class Universe extends Component {
 				<Ship findShip={this.findShip} />
 				{ this.state.planetsArray.length ? this.renderPlanets() : null }
 				<HUD water={water} food={food} medicine={medicine} />
-				{ this.state.gameOver ? <GameOver score={this.state.score} /> : null }
+				{ this.state.gameOver ? <GameOver score={this.state.score} isHighScore={this.state.isHighScore} /> : null }
 			</div>
 		)
 	}

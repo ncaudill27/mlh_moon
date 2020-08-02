@@ -1,14 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Universe from './containers/Universe';
-import Ship from './components/Ship';
 
-function App() {
-	return (
-		<div className="App">
-			<Universe />
-		</div>
-	);
+
+class App extends Component {
+	
+	state = {
+		highScores: []
+	}
+	
+	componentDidMount() {
+		this.fetchHighScores();
+	}
+
+	fetchHighScores = () => {
+		fetch('/api/v1/high_scores')
+		.then( res => res.json() )
+		.then( data => this.setState({highScores: data}));
+	}
+
+	addHighScore = highScore => {
+		const highScores = this.state.highScores.concat(highScore);
+		highScores.sort( (a, b) => a.high_score > b.highScore );
+		highScores.slice(0, 11);
+		this.setState({highScores});
+	}
+	
+	render() {
+		console.log(this.state);
+		return (
+			<div className="App">
+				<Universe highScores={this.state.highScores} addHighScore={this.addHighScore} />
+			</div>
+		);
+	}
 }
 
 export default App;

@@ -31,6 +31,21 @@ class Universe extends Component {
 		isHighScore: false
 	}
 
+	componentDidMount = async () => {
+		music.play();
+		await this.generatePlanets(this.createPlanet, 80);
+		this.calcPlanetBoundaries();
+		this.decayId = setInterval(this.decayResources, 1000);
+		this.scoreId = setInterval(this.addPoint, 10);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.decayId);
+		clearInterval(this.scoreId);
+		clearInterval(this.transferId);
+		music.stop();
+	}
+
 	losingCondition = () => {
 		const { medicine, food, water } = this.state;
 
@@ -42,7 +57,6 @@ class Universe extends Component {
 	}
 
 	gameOver = () => {
-		console.log('GAME OVER');
 		clearInterval(this.decayId);
 		clearInterval(this.scoreId);
 		this.setState({gameOver: true});
@@ -88,19 +102,6 @@ class Universe extends Component {
 		score: prevState.score + 1
 	}));
 
-	componentDidMount = async () => {
-		await this.generatePlanets(this.createPlanet, 80);
-		this.calcPlanetBoundaries();
-		this.decayId = setInterval(this.decayResources, 100);
-		this.scoreId = setInterval(this.addPoint, 10);
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.decayId);
-		clearInterval(this.transferId);
-		clearInterval(this.scoreId);
-	}
-
 	findShip = shipBoundaries => {
 		this.calcPlanetBoundaries();
 		this.state.planetBoundaries.map( planet => {
@@ -128,7 +129,6 @@ class Universe extends Component {
 
 	stopTransfer = planet => {
 		if (this.isDepleted(planet)) {
-			console.log('Clear interval');
 			clearInterval(planet.transferId);
 			return; 
 		};

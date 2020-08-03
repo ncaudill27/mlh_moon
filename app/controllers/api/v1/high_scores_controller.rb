@@ -3,7 +3,7 @@ module Api::V1
   
     # GET /high_scores
     def index
-      @high_scores = HighScore.all
+      @high_scores = HighScore.all.limit(10).sort{ |a, b| b.score <=> a.score }
   
       render json: @high_scores
     end

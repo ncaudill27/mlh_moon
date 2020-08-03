@@ -6,7 +6,7 @@ class App extends Component {
 	
 	state = {
 		highScores: [],
-		view:"intro"
+		view: "intro"
 	}
 	
 	componentDidMount() {
@@ -64,18 +64,21 @@ class App extends Component {
 	fetchHighScores = () => {
 		fetch('/api/v1/high_scores')
 		.then( res => res.json() )
-		.then( data => this.setState({highScores: data}));
+		.then( highScores => this.setState({highScores}) );
 	}
 
-	addHighScore = highScore => {
-		const highScores = this.state.highScores.concat(highScore);
-		highScores.sort( (a, b) => a.score > b.score );
+	addHighScore = newScore => {
+		// add new score
+		const highScores = this.state.highScores.concat(newScore);
+		// place new score it's place
+		highScores.sort( (a, b) => a.score < b.score ? 1 : -1 );
+		// remove 11th score
 		highScores.slice(0, 11);
+		// set updated highScores to trigger render
 		this.setState({highScores});
 	}
-	
+
 	render() {
-		console.log(this.state);
 		return (
 			<div className="App">
 				{ this.switch() }

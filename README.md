@@ -1,24 +1,21 @@
-# README
+# Hack the Planet
+[![Heroku](http://heroku-badge.herokuapp.com/?app=planet-hack)](https://planet-hack.herokuapp.com/)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![Gameplay Screenshot](public/hack_screen.png)
 
-Things you may want to cover:
+An exploration of game development. Built for MLH Summer League event, To The Moon And Hack.
 
-* Ruby version
+# Stack
+## React.js | Ruby on Rails | Heroku | PostgreSQL
+___
+## Running locally
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Clone repo
+* Install dependencies by running:
+```bash
+rake start:prep
+```
+* Start front and back-end servers
+```bash
+rake start
+```

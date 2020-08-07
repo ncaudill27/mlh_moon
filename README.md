@@ -13,7 +13,7 @@ ___
 * Clone repo
 * Install dependencies by running:
 ```bash
-rake start:prep
+bundle && rake start:prep
 ```
 * Start front and back-end servers
 ```bash

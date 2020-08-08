@@ -7,7 +7,7 @@
   position: relative;
 }
 
-.Ship {
+#Ship {
   width: 100px;
   z-index: 1;
   height: auto;
@@ -16,6 +16,10 @@
   left: 50%;
   top: 50%;
   transform: rotate(var(--orientation));
+}
+
+#Ship:focus {
+  outline: none;
 }
 
 .Planet {

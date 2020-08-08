@@ -16,8 +16,12 @@ class Ship extends Component {
 		left: document.documentElement.clientLeft
 	}
 
+	componentDidMount() {
+		document.getElementById('Ship').focus();
+	}
+
 	shipBoundaries = () => {
-		const ship = document.querySelector('.Ship');
+		const ship = document.getElementById('Ship');
 		return ship.getBoundingClientRect();
 	}
 	
@@ -111,11 +115,12 @@ class Ship extends Component {
 
 	render() {
 		return (
-			<div tabIndex='0' onKeyDown={this.handleMovement}>
+			<div onKeyDown={this.handleMovement}>
 				<img
-					className='Ship'
+					tabIndex='1'
 					src={ship}
 					alt='Ship'
+					id='Ship'
 				/>
 			</div>
 		);

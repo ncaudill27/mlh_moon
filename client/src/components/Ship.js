@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ship from '../ship.png';
-import { limitGameWindow } from '../utils/navigation';
+import { limitGameWindow, navigateShip, shipBoundaries } from '../utils/navigation';
 
 const seedOrientation = () => {
 	const rootOrientation = getComputedStyle(document.documentElement)
@@ -21,19 +21,15 @@ class Ship extends Component {
 		document.getElementById('Ship').focus();
 	}
 
-	shipBoundaries = () => {
-		const ship = document.getElementById('Ship');
-		return ship.getBoundingClientRect();
-	}
-
 	setShipPosition = (top, left) => {
 		[top, left] = limitGameWindow(top, left);
 		this.setState({top, left});
-		this.props.findShip(this.shipBoundaries());
+		this.props.findShip(shipBoundaries());
 	}
 
 	handleMovement = e => {
-
+		const {orientation, top, left} = navigateShip(e, this.state);
+		this.setState({orientation, top, left});
 	}
 
 	maintainOrientation = orientation => {
@@ -46,6 +42,7 @@ class Ship extends Component {
 	}
 
 	render() {
+		console.log();
 		return (
 			<div onKeyDown={this.handleMovement}>
 				<img

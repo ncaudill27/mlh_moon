@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ship from '../ship.png';
+import { limitGameWindow } from '../utils/navigation';
 
 const seedOrientation = () => {
 	const rootOrientation = getComputedStyle(document.documentElement)
@@ -30,19 +31,9 @@ class Ship extends Component {
 	}
 
 	setShipPosition = (top, left) => {
-		[top, left] = this.limitGameWindow(top, left);
+		[top, left] = limitGameWindow(top, left);
 		this.setState({top, left});
 		this.props.findShip(this.shipBoundaries());
-	}
-
-	limitGameWindow = (top, left) => {
-		const rightEdge = document.documentElement.scrollWidth - 139;
-		const bottomEdge = document.documentElement.scrollHeight - 139;
-		if (left < 0) left = 0;
-		if (top < 0) top = 0;
-		if (left > rightEdge) left = rightEdge;
-		if (top > bottomEdge) top = bottomEdge;
-		return [top, left];
 	}
 
 	accelerateShip = orientation => {

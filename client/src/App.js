@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Universe from './containers/Universe';
+import { fetchHighScores } from './utils/highScoresAPI';
 
 class App extends Component {
 	
@@ -8,9 +9,10 @@ class App extends Component {
 		highScores: [],
 		view: "intro"
 	}
-	
+
 	componentDidMount() {
-		this.fetchHighScores();
+		fetchHighScores()
+		.then( highScores => this.setState({highScores}) )
 	}
 
 	toIntro = () => this.setState({view: 'intro'});
@@ -54,28 +56,27 @@ class App extends Component {
 				return this.renderIntro();
 			
 			case 'universe':
-				return <Universe highScores={this.state.highScores} addHighScore={this.addHighScore} toIntro={this.toIntro} />
+				return <Universe highScores={this.state.highScores} addHighScore={this.addHighScore} />
 
 			default:
 				break;
 		};
 	}
 
-	fetchHighScores = () => {
-		fetch('/api/v1/high_scores')
-		.then( res => res.json() )
-		.then( highScores => this.setState({highScores}) );
+	addHighScore = newScore => {
+		this.toIntro();
+		// add new score in proper rank
+		const highScores = this.placeNewHighScore(newScore);
+		// set updated highScores to trigger render
+		this.setState({highScores});
 	}
 
-	addHighScore = newScore => {
-		// add new score
+	placeNewHighScore = newScore => {
 		const highScores = this.state.highScores.concat(newScore);
 		// place new score it's place
 		highScores.sort( (a, b) => a.score < b.score ? 1 : -1 );
 		// remove 11th score
-		highScores.slice(0, 11);
-		// set updated highScores to trigger render
-		this.setState({highScores});
+		return highScores.slice(0, 11);
 	}
 
 	render() {

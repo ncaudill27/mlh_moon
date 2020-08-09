@@ -6,6 +6,7 @@ import Planet from '../components/Planet';
 import HUD from '../components/HUD';
 import GameOver from '../components/GameOver';
 import generatePlanets from '../utils/generatePlanets';
+import { postHighScore } from '../utils/highScoresAPI';
 
 const music = new Howl({
 	src: [space_music],
@@ -29,7 +30,7 @@ class Universe extends Component {
 	componentDidMount = () => {
 		music.play();
 		this.generatePlanets();
-		this.decayId = setInterval(this.decayResources, 1000);
+		this.decayId = setInterval(this.decayResources, 100);
 		this.scoreId = setInterval(this.addPoint, 10);
 	}
 
@@ -44,8 +45,8 @@ class Universe extends Component {
 		const { medicine, food, water } = this.state;
 
 		if (medicine <= 0) return true;
-		if (food <= 0) return true;
-		if (water <= 0) return true;
+		else if (food <= 0) return true;
+		else if (water <= 0) return true;
 
 		return false;
 	}
@@ -65,21 +66,13 @@ class Universe extends Component {
 	submitHighScore = (name, e) => {
 		e.preventDefault();
 
-		fetch('/api/v1/high_scores', {
-			'method': 'POST',
-			'headers': {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json'
-			},
-			'body': JSON.stringify({
-				name,
-				score: this.state.score
-			})
-		}).then( res => res.json() )
-		.then( data => {
-			this.props.addHighScore(data);
-			this.props.toIntro();
-		});
+		const payload = {
+			name,
+			score: this.state.score
+		}
+
+		postHighScore(payload)
+		.then( data => this.props.addHighScore(data) );
 	}
 
 	decayResources = () => {

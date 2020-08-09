@@ -52,7 +52,7 @@ class Planet {
 		this.food -= this.type === 'food' ? foodTransferred * 2 : foodTransferred;
 		this.medicine -= this.type === 'medicine' ? medicineTransferred * 2 : medicineTransferred;
 
-		if ( this.isDepleted() ) return this.stopTransfer();
+		if ( this.isDepleted() ) return false;
 
 		return {
 			water: waterTransferred,

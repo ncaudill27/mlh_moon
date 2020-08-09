@@ -100,15 +100,25 @@ class Universe extends Component {
 		}));
 	}
 
+	stopDecay = () => clearInterval(this.decayId);
+
 	addPoint = () => this.setState( prevState => ({
 		score: prevState.score + 1
 	}));
 
 	findShip = shipBoundaries => {
-		this.calcPlanetBoundaries();
-		this.state.planetBoundaries.map( planet => {
-			this.findCollision(shipBoundaries, planet);
-			this.stopTransfer(planet);
+		this.state.planetsArray.map( planet => {
+			planet.setCollisionBoundaries();
+			const collision = planet.findCollision(shipBoundaries);
+			if (collision && !planet.decayId && planet.transferResources() ) {
+				planet.decayId = setInterval( () => this.beginTransfer(planet), 250);
+				this.stopDecay();
+				console.log("Begin transfer");
+			} else if ( planet.isDepleted() && !this.decayId ) {
+				planet.stopTransfer();
+				this.decayId = setInterval(this.decayResources, 1000);
+				console.log("End transfer");
+			}
 		});
 
 		this.setState({
@@ -116,12 +126,35 @@ class Universe extends Component {
 		});
 	}
 
-		calcPlanetBoundaries = () => {
-		this.state.planetsArray.map( planet => {
-			planet.setCollisionBoundaries();
-			console.log('Collision?', planet);
-		})
+	beginTransfer = planet => {
+		let {
+			water,
+			food,
+			medicine 
+		} = planet.transferResources()
+		
+		water = this.state.water + water;
+		food = this.state.food + food;
+		medicine = this.state.medicine;
+
+		this.setState({
+			water,
+			food,
+			medicine
+		});
 	}
+
+	// findShip = shipBoundaries => {
+	// 	this.calcPlanetBoundaries();
+	// 	this.state.planetBoundaries.map( planet => {
+	// 		this.findCollision(shipBoundaries, planet);
+	// 		this.stopTransfer(planet);
+	// 	});
+
+	// 	this.setState({
+	// 		shipBoundaries
+	// 	});
+	// }
 
 	// isDepleted = planet => planet.water < 10 && planet.food < 10 && planet.medicine < 10;
 	
@@ -222,23 +255,23 @@ class Universe extends Component {
 		} );
 	}
 
-	planetType = p => {
-		const values = { water: p.water, medicine: p.medicine, food: p.food}
-		let high = 0;
-		let type = null;
-		for (let key in values) {
-			if (values[key] > high) {
-				high = values[key];
-				type = key;
-			};
-		}
+	// planetType = p => {
+	// 	const values = { water: p.water, medicine: p.medicine, food: p.food}
+	// 	let high = 0;
+	// 	let type = null;
+	// 	for (let key in values) {
+	// 		if (values[key] > high) {
+	// 			high = values[key];
+	// 			type = key;
+	// 		};
+	// 	}
 
-		return { ...p, type };
-	}
+	// 	return { ...p, type };
+	// }
 
 	render() {
 		const { water, food, medicine } = this.state;
-		console.log(this.state);
+		// console.log(this.state);
 		return (
 			<div className="Universe">
 				<button id='mute' onClick={() => music.volume(0)}>MUTE</button>

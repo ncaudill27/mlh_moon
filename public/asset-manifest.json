@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.697d8d79.chunk.css",
+    "main.js": "/static/js/main.b1addd49.chunk.js",
+    "main.js.map": "/static/js/main.b1addd49.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.09b85ec0.js",
+    "runtime-main.js.map": "/static/js/runtime-main.09b85ec0.js.map",
+    "static/js/2.8d2ed6ac.chunk.js": "/static/js/2.8d2ed6ac.chunk.js",
+    "static/js/2.8d2ed6ac.chunk.js.map": "/static/js/2.8d2ed6ac.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.bdc62bbd2149b29249b6ef1d98cc6fdc.js": "/precache-manifest.bdc62bbd2149b29249b6ef1d98cc6fdc.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.697d8d79.chunk.css.map": "/static/css/main.697d8d79.chunk.css.map",
+    "static/js/2.8d2ed6ac.chunk.js.LICENSE.txt": "/static/js/2.8d2ed6ac.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/jake-weirick-Q_RBVFFXR_g-unsplash.d8900afb.jpg",
+    "static/media/ship.png": "/static/media/ship.89a60ce9.png",
+    "static/media/space_music.mp3": "/static/media/space_music.c18e0401.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.09b85ec0.js",
+    "static/js/2.8d2ed6ac.chunk.js",
+    "static/css/main.697d8d79.chunk.css",
+    "static/js/main.b1addd49.chunk.js"
+  ]
+}

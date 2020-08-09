@@ -15,7 +15,7 @@ function GameOver({score, isHighScore, submitHighScore}) {
 
   const highScoreForm = <form onSubmit={ e => submitHighScore(name, e) } autoComplete="off">
     <label>Name</label>
-    <input id='name' type='text' name='name' value={name} onChange={handleChange} required></input>
+    <input id='name' type='text' name='name' value={name} onChange={handleChange} required></input><br></br>
     <input type='hidden' name='score' value={score} />
     <input type='submit' />
   </form>

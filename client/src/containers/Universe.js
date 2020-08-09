@@ -108,9 +108,8 @@ class Universe extends Component {
 
 	findShip = shipBoundaries => {
 		this.state.planetsArray.map( planet => {
-			planet.setCollisionBoundaries();
 			const collision = planet.findCollision(shipBoundaries);
-			if ( collision && !planet.transferId && planet.transferResources() ) {
+			if ( collision && !planet.transferId && !!planet.transferResources() ) {
 				planet.transferId = setInterval( () => this.beginTransfer(planet), 250);
 			} else if ( planet.isDepleted() ) {
 				planet.stopTransfer();
@@ -130,15 +129,15 @@ class Universe extends Component {
 		} = planet.transferResources();
 		
 		if (water && food && medicine) {
-			water = this.state.water + water;
-			food = this.state.food + food;
-			medicine = this.state.medicine;
-			console.log("transferring", water, food, medicine);
-			this.setState({
-				water,
-				food,
-				medicine
-			});
+			// water = this.state.water + water;
+			// food = this.state.food + food;
+			// medicine = this.state.medicine + medicine;
+
+			this.setState( prevState => ({
+				water: prevState.water + water,
+				food: prevState.food + food,
+				medicine: prevState.medicine + medicine
+			}));
 		}
 	}
 

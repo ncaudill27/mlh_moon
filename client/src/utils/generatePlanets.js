@@ -40,19 +40,19 @@ class Planet {
 		return type;
 	}
 
-	isDepleted = () => this.water < 10 && this.food < 10 && this.medicine < 10;
+	isDepleted = () => this.water < 10 || this.food < 10 || this.medicine < 10;
 
 	transferResources = () => {
-		const waterTransferred = this.water * 0.05 + 2;
-		const foodTransferred = this.food * 0.05 + 2;
-		const medicineTransferred = this.medicine * 0.05 + 2;
+		let waterTransferred = this.water * 0.05 + 2;
+		let foodTransferred = this.food * 0.05 + 2;
+		let medicineTransferred = this.medicine * 0.05 + 2;
 
 		// lower planet's colors/resources
 		this.water -= this.type === 'water' ? waterTransferred * 2 : waterTransferred;
 		this.food -= this.type === 'food' ? foodTransferred * 2 : foodTransferred;
 		this.medicine -= this.type === 'medicine' ? medicineTransferred * 2 : medicineTransferred;
 
-		console.log(this.water, this.food, this.medicine);
+		console.log('W', this.water,'F', this.food,'M', this.medicine);
 		if ( this.isDepleted() ) return false;
 
 		return {
@@ -83,6 +83,7 @@ class Planet {
 	}
 
 	findCollision = ship => {
+		this.setCollisionBoundaries();
 		const { x, y, width, height } = this.boundaries;
 
 		if (

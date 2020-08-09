@@ -116,6 +116,13 @@ class Universe extends Component {
 		});
 	}
 
+		calcPlanetBoundaries = () => {
+		this.state.planetsArray.map( planet => {
+			planet.setCollisionBoundaries();
+			console.log('Collision?', planet);
+		})
+	}
+
 	// isDepleted = planet => planet.water < 10 && planet.food < 10 && planet.medicine < 10;
 	
 	// beginTransfer = planet => {

@@ -52,7 +52,7 @@ class Planet {
 		this.food -= this.type === 'food' ? foodTransferred * 2 : foodTransferred;
 		this.medicine -= this.type === 'medicine' ? medicineTransferred * 2 : medicineTransferred;
 
-		// if ( this.isDepleted() ) return;
+		if ( this.isDepleted() ) return this.stopTransfer();
 
 		return {
 			water: waterTransferred,
@@ -65,10 +65,10 @@ class Planet {
 
 	setCollisionBoundaries = () => {
 		this.DOMelement = document.getElementById(this.id);
-		const planetBounds = this.DOMelement.getBoundingClientRect();
-		const boundaries = this.stripBoundingClientFunctions(planetBounds)
 
-		return boundaries;
+		this.boundaries = this.stripBoundingClientFunctions(
+			this.DOMelement.getBoundingClientRect()
+		);
 	}
 
 	stripBoundingClientFunctions = boundingClientObject => {
@@ -82,11 +82,13 @@ class Planet {
 	}
 
 	findCollision = ship => {
+		const { x, y, width, height } = this.boundaries;
+
 		if (
-			ship.x < this.x + this.width &&
-			ship.x + ship.width > this.x &&
-			ship.y < this.y + this.height &&
-			ship.y + ship.height > this.y
+			ship.x < x + width &&
+			ship.x + ship.width > x &&
+			ship.y < y + height &&
+			ship.y + ship.height > y
 		) {
 			return true;
 		};

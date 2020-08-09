@@ -91,12 +91,12 @@ class Universe extends Component {
 	}
 
 	decayResources = () => {
-		if (this.losingCondition()) this.gameOver();
+		if ( this.losingCondition() ) this.gameOver();
 
 		this.setState( prevState => ({
 			medicine: prevState.medicine - 25,
-			food: prevState.medicine - 25,
-			water: prevState.medicine - 25,
+			food: prevState.food - 25,
+			water: prevState.water - 25,
 		}));
 	}
 
@@ -110,14 +110,10 @@ class Universe extends Component {
 		this.state.planetsArray.map( planet => {
 			planet.setCollisionBoundaries();
 			const collision = planet.findCollision(shipBoundaries);
-			if (collision && !planet.decayId && planet.transferResources() ) {
-				planet.decayId = setInterval( () => this.beginTransfer(planet), 250);
-				this.stopDecay();
-				console.log("Begin transfer");
-			} else if ( planet.isDepleted() && !this.decayId ) {
+			if ( collision && !planet.transferId && planet.transferResources() ) {
+				planet.transferId = setInterval( () => this.beginTransfer(planet), 250);
+			} else if ( planet.isDepleted() ) {
 				planet.stopTransfer();
-				this.decayId = setInterval(this.decayResources, 1000);
-				console.log("End transfer");
 			}
 		});
 
@@ -131,17 +127,19 @@ class Universe extends Component {
 			water,
 			food,
 			medicine 
-		} = planet.transferResources()
+		} = planet.transferResources();
 		
-		water = this.state.water + water;
-		food = this.state.food + food;
-		medicine = this.state.medicine;
-
-		this.setState({
-			water,
-			food,
-			medicine
-		});
+		if (water && food && medicine) {
+			water = this.state.water + water;
+			food = this.state.food + food;
+			medicine = this.state.medicine;
+			console.log("transferring", water, food, medicine);
+			this.setState({
+				water,
+				food,
+				medicine
+			});
+		}
 	}
 
 	// findShip = shipBoundaries => {

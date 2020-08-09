@@ -27,23 +27,11 @@ class Ship extends Component {
 	}
 
 	handleMovement = e => {
-		const {orientation, top, left} = navigateShip(e, this.state);
-		console.log("handleMovement: ", orientation, top, left);
-		this.setState({orientation, top, left});
+		this.setState(navigateShip(e, this.state));
 		this.props.findShip(this.shipBoundaries());
 	}
 
-	maintainOrientation = orientation => {
-		if (orientation > 359) {
-			orientation = 0;
-		} else if (orientation < 0) {
-			orientation = 358;
-		}
-		return orientation;
-	}
-
 	render() {
-		console.log();
 		return (
 			<div onKeyDown={this.handleMovement}>
 				<img

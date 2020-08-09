@@ -1,4 +1,19 @@
+export default function(num) {
+	for (let count = 1; count <= num; count++) {
+		new Planet(count);
+	}
+
+	return Planet.all;
+}
+
+function randomNumber(min, max) {
+	return Math.floor(Math.random() * (max - min) + min); 
+}
+
 class Planet {
+
+	static all = [];
+
 	constructor(id) {
 		this.id = id;
 		this.water = Math.floor(Math.random() * 255) + 1;
@@ -8,6 +23,7 @@ class Planet {
 		this.left = randomNumber(700, 15000);
 		this.size = randomNumber(300, 700);
 		this.planetType = this.determineType();
+		Planet.all.push(this);
 	}
 
 	determineType = () => {
@@ -47,20 +63,34 @@ class Planet {
 
 	stopTransfer = () => clearInterval(this.transferId);
 
-	collisionBoundaries = () => {
+	setCollisionBoundaries = () => {
 		this.DOMelement = document.getElementById(this.id);
 		const planetBounds = this.DOMelement.getBoundingClientRect();
+		const boundaries = this.stripBoundingClientFunctions(planetBounds)
 
-		return this.stripBoundingClientFunctions(planetBounds);
+		return boundaries;
 	}
 
 	stripBoundingClientFunctions = boundingClientObject => {
 		const boundaries = {};
 		
-		for (let key in planetBounds) {
-			if (typeof planetBounds[key] !== 'function') boundaries[key] = planetBounds[key];
+		for (let key in boundingClientObject) {
+			if (typeof boundingClientObject[key] !== 'function') boundaries[key] = boundingClientObject[key];
 		};
 
 		return boundaries;
+	}
+
+	findCollision = ship => {
+		if (
+			ship.x < this.x + this.width &&
+			ship.x + ship.width > this.x &&
+			ship.y < this.y + this.height &&
+			ship.y + ship.height > this.y
+		) {
+			return true;
+		};
+
+		return false;
 	}
 }

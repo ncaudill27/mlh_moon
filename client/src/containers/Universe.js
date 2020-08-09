@@ -5,6 +5,7 @@ import Ship from '../components/Ship';
 import Planet from '../components/Planet';
 import HUD from '../components/HUD';
 import GameOver from '../components/GameOver';
+import generatePlanets from '../utils/generatePlanets';
 
 function randomNumber(min, max) {
 	return Math.floor(Math.random() * (max - min) + min); 
@@ -17,9 +18,9 @@ const music = new Howl({
 	volume: 0.4
 });
 
-class Universe extends Component {
+class Universe extends Component { 
 
-	state={
+	state = {
 		gameOver: false,
 		planetsArray: [],
 		shipBoundaries: {},
@@ -33,8 +34,9 @@ class Universe extends Component {
 
 	componentDidMount = async () => {
 		music.play();
-		await this.generatePlanets(this.createPlanet, 80);
-		this.calcPlanetBoundaries();
+		await this.generatePlanets();
+		// await this.generatePlanets(this.createPlanet, 80);
+		// this.calcPlanetBoundaries();
 		this.decayId = setInterval(this.decayResources, 1000);
 		this.scoreId = setInterval(this.addPoint, 10);
 	}
@@ -114,93 +116,98 @@ class Universe extends Component {
 		});
 	}
 
-	isDepleted = planet => planet.water < 10 && planet.food < 10 && planet.medicine < 10;
+	// isDepleted = planet => planet.water < 10 && planet.food < 10 && planet.medicine < 10;
 	
-	beginTransfer = planet => {
+	// beginTransfer = planet => {
 
-		planet = this.state.planetsArray.find( p => p.id === planet.id );
-		// exit function if planet lacks resources
-		if ( this.isDepleted(planet) ) return;
+	// 	planet = this.state.planetsArray.find( p => p.id === planet.id );
+	// 	// exit function if planet lacks resources
+	// 	if ( this.isDepleted(planet) ) return;
 
-		planet.transferId = setInterval(() => {
-			this.transferResources(planet);
-		}, 500);
-	}
+	// 	planet.transferId = setInterval(() => {
+	// 		this.transferResources(planet);
+	// 	}, 500);
+	// }
 
-	stopTransfer = planet => {
-		if (this.isDepleted(planet)) {
-			clearInterval(planet.transferId);
-			return; 
-		};
-	}
+	// stopTransfer = planet => {
+	// 	if (this.isDepleted(planet)) {
+	// 		clearInterval(planet.transferId);
+	// 		return; 
+	// 	};
+	// }
 
-	transferResources = planet => {
-		const waterTransferred = planet.water * 0.05 + 2
-		const foodTransferred = planet.food * 0.05 + 2
-		const medicineTransferred = planet.medicine * 0.05 + 2
+	// transferResources = planet => {
+	// 	const waterTransferred = planet.water * 0.05 + 2
+	// 	const foodTransferred = planet.food * 0.05 + 2
+	// 	const medicineTransferred = planet.medicine * 0.05 + 2
 
-		// lower planet's colors/resources
-		planet.water -= planet.type === 'water' ? waterTransferred * 2 : waterTransferred;
-		planet.food -= planet.type === 'food' ? foodTransferred * 2 : foodTransferred;
-		planet.medicine -= planet.type === 'medicine' ? medicineTransferred * 2 : medicineTransferred;
+	// 	// lower planet's colors/resources
+	// 	planet.water -= planet.type === 'water' ? waterTransferred * 2 : waterTransferred;
+	// 	planet.food -= planet.type === 'food' ? foodTransferred * 2 : foodTransferred;
+	// 	planet.medicine -= planet.type === 'medicine' ? medicineTransferred * 2 : medicineTransferred;
 
-		// stop transferResources from completing if planet isDepleted
-		if (this.isDepleted(planet)) return;
+	// 	// stop transferResources from completing if planet isDepleted
+	// 	if (this.isDepleted(planet)) return;
 		
-		// raise user resources
-		this.setState( prevState => ({
-			water: prevState.water + waterTransferred,
-			food: prevState.food + foodTransferred,
-			medicine: prevState.medicine + medicineTransferred
-		}));
-	}
+	// 	// raise user resources
+	// 	this.setState( prevState => ({
+	// 		water: prevState.water + waterTransferred,
+	// 		food: prevState.food + foodTransferred,
+	// 		medicine: prevState.medicine + medicineTransferred
+	// 	}));
+	// }
 
-	findCollision = (ship, planet) => {
-		if (ship.x < planet.x + planet.width &&
-			ship.x + ship.width > planet.x &&
-			ship.y < planet.y + planet.height &&
-			ship.y + ship.height > planet.y) {
-			if (planet.transferId === undefined) this.beginTransfer(planet);
-		}
-	}
+	// findCollision = (ship, planet) => {
+	// 	if (ship.x < planet.x + planet.width &&
+	// 		ship.x + ship.width > planet.x &&
+	// 		ship.y < planet.y + planet.height &&
+	// 		ship.y + ship.height > planet.y)
+	// 		{
+	// 		if (planet.transferId === undefined) this.beginTransfer(planet);
+	// 	}
+	// }
 
-	calcPlanetBoundaries = () => {
-		const planetBoundaries = this.state.planetsArray.map( planet => {
-			const planetDOM = document.getElementById(planet.id);
-			const planetBounds = planetDOM.getBoundingClientRect();
-			let boundaries = {}
-			for (let key in planetBounds) {
-				if(typeof planetBounds[key] !== 'function') {
-					boundaries[key] = planetBounds[key]
-				}
-			}
-			return Object.assign({}, {id: planet.id}, boundaries)
-		});
+	// calcPlanetBoundaries = () => {
+	// 	const planetBoundaries = this.state.planetsArray.map( planet => {
+	// 		const planetDOM = document.getElementById(planet.id);
+	// 		const planetBounds = planetDOM.getBoundingClientRect();
+	// 		let boundaries = {}
+	// 		for (let key in planetBounds) {
+	// 			if(typeof planetBounds[key] !== 'function') {
+	// 				boundaries[key] = planetBounds[key]
+	// 			}
+	// 		}
+	// 		return Object.assign({}, {id: planet.id}, boundaries)
+	// 	});
 
-		this.setState({planetBoundaries});
-	}
+	// 	this.setState({planetBoundaries});
+	// }
 
-	createPlanet = id => {
-		let planet = {
-				water: Math.floor(Math.random() * 255) + 1,
-				medicine: Math.floor(Math.random() * 255) + 1,
-				food: Math.floor(Math.random() * 255) + 1,
-				top: randomNumber(700, 15000),
-				left: randomNumber(700, 15000),
-				size: randomNumber(300, 700),
-				id
-		}
-		planet = this.planetType(planet);
-		this.setState( prevState => ({
-			planetsArray: [...prevState.planetsArray, planet]
-		}));
-	}
+	// createPlanet = id => {
+	// 	let planet = {
+	// 			water: Math.floor(Math.random() * 255) + 1,
+	// 			medicine: Math.floor(Math.random() * 255) + 1,
+	// 			food: Math.floor(Math.random() * 255) + 1,
+	// 			top: randomNumber(700, 15000),
+	// 			left: randomNumber(700, 15000),
+	// 			size: randomNumber(300, 700),
+	// 			id
+	// 	}
+	// 	planet = this.planetType(planet);
+	// 	this.setState( prevState => ({
+	// 		planetsArray: [...prevState.planetsArray, planet]
+	// 	}));
+	// }
 
-	generatePlanets = (func, times) => {
-		if (times === 0) return;
-		func(times);
-		return this.generatePlanets(func, --times);
+	generatePlanets = () => {
+		const planetsArray = generatePlanets(80);
+		this.setState({planetsArray});
 	}
+	// generatePlanets = (func, times) => {
+	// 	if (times === 0) return;
+	// 	func(times);
+	// 	return this.generatePlanets(func, --times);
+	// }
 
 	renderPlanets = () => {
 		return this.state.planetsArray.map( p => {
@@ -224,7 +231,7 @@ class Universe extends Component {
 
 	render() {
 		const { water, food, medicine } = this.state;
-
+		console.log(this.state);
 		return (
 			<div className="Universe">
 				<button id='mute' onClick={() => music.volume(0)}>MUTE</button>

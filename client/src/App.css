@@ -86,6 +86,12 @@
   color: white
 }
 
+.Game-over input {
+  background-color: white;
+  color: black;
+  padding: 10px;
+}
+
 .Game-over button {
   background-color: rgb(255, 238, 0);
   padding: 10px;

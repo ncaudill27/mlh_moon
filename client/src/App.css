@@ -109,15 +109,19 @@
 
 .Game-over {
   position: fixed;
+  z-index: 2;
+  height: 250px;
+  width: 350px; 
   padding: 40px;
-  height: fit-content;
-  width: fit-content; 
+  top: 40%;
+  left: 50%;
+  margin-left: -195px;
+  margin-top: -195px;
   background-color: #510086;
-  border-radius: 10px;
   border-color: #410569;
-  top: 150px;
-  left: 43%;
-  color: white
+  color: white;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .Game-over input {

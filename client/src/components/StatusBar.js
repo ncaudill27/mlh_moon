@@ -11,7 +11,7 @@ function StatusBar({resource, amount}) {
 				return 'cyan';
 			
 			case 'food':
-				return 'yellow';
+				return '#ccff15';
 		
 			default:
 				break;
@@ -30,7 +30,7 @@ function StatusBar({resource, amount}) {
 	}
 
 	const labelStyle = {
-		padding:'0 5px',
+		padding: '1px 7px',
 		margin:'0',
 		color: 'black',
 	}

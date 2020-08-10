@@ -5,10 +5,10 @@ function StatusBar({resource, amount}) {
 	const setColor = resource => {
 		switch (resource) {
 			case 'medicine':
-				return 'red';
+				return '#af111c';
 
 			case 'water':
-				return 'cyan';
+				return '#3987c9';
 			
 			case 'food':
 				return '#ccff15';
@@ -34,10 +34,6 @@ function StatusBar({resource, amount}) {
 		margin:'0',
 		color: 'black',
 	}
-
-
-	// create function to display message when < certain size;
-	// give bar a measurement
 
 	return (
 		<div className="Status-container">

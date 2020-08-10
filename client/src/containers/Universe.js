@@ -30,7 +30,7 @@ class Universe extends Component {
 	componentDidMount = () => {
 		music.play();
 		this.generatePlanets();
-		this.decayId = setInterval(this.decayResources, 10000);
+		this.decayId = setInterval(this.decayResources, 750);
 		this.scoreId = setInterval(this.addPoint, 10);
 	}
 
@@ -112,13 +112,19 @@ class Universe extends Component {
 			food,
 			medicine 
 		} = planet.transferResources();
+
 		
 		if ( water && food && medicine ) {
-			this.setState( prevState => ({
-				water: prevState.water + water,
-				food: prevState.food + food,
-				medicine: prevState.medicine + medicine
-			}));
+			// cap resources at 1000
+			water = this.state.water + water >= 1000 ? 1000 : this.state.water + water
+			food = this.state.food + food >= 1000 ? 1000 : this.state.food + food
+			medicine = this.state.medicine + medicine >= 1000 ? 1000 : this.state.medicine + medicine
+
+			this.setState({
+				water,
+				food,
+				medicine
+			});
 		};
 	}
 

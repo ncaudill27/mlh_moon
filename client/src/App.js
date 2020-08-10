@@ -7,7 +7,7 @@ class App extends Component {
 	
 	state = {
 		highScores: [],
-		view: "universe"
+		view: "intro"
 	}
 
 	componentDidMount() {

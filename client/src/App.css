@@ -71,7 +71,7 @@
   position: flex;
   color: red;
   justify-self: center;
-  animation: text-flicer 1s linear infinite
+  animation: text-flicker 0.75s linear infinite
 }
 
 .Status-container {
@@ -188,7 +188,7 @@
   }
   25% {
     box-shadow:
-    inset 0 0 3px 2px red,
+    inset 0 0 3px 2px yellow,
     inset 0 0 4px 3px #fff,
       0 0 12px 6px red;
   }
@@ -200,14 +200,30 @@
   }
   75% {
     box-shadow:
-    inset 0 0 3px 2px red,
+    inset 0 0 3px 2px yellow,
     inset 0 0 4px 3px #fff,
-      0 0 12px 6px red;
+      0 0 12px 6px yellow;
   }
   100% {
     box-shadow:
     inset 0 0 2px 1px red,
     inset 0 0 3px 2px #fff,
       0 0 10px 4px red;
+  }
+}
+
+@keyframes text-flicker {
+  0% {
+    opacity: 1;
+  }
+
+  33% {
+    opacity: 0,5;
+    text-shadow: 1px 1px 15px yellow;
+  }
+
+  66% {
+    opacity: 0.1;
+    text-shadow: 1px 1px 15px #f0f;
   }
 }

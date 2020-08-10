@@ -30,7 +30,7 @@ class Universe extends Component {
 	componentDidMount = () => {
 		music.play();
 		this.generatePlanets();
-		this.decayId = setInterval(this.decayResources, 100);
+		this.decayId = setInterval(this.decayResources, 10000);
 		this.scoreId = setInterval(this.addPoint, 10);
 	}
 
@@ -129,7 +129,7 @@ class Universe extends Component {
 
 	renderPlanets = () => {
 		return this.state.planetsArray.map( planet => {
-			return <Planet {...planet} />;
+			return <Planet key={planet.id} {...planet} />;
 		});
 	}
 

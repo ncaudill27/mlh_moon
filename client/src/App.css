@@ -14,7 +14,8 @@
   text-align: center;
   position: fixed;
   left: 50%;
-  top: 50%;
+  top: 40%;
+  margin-left: -50px;
   transform: rotate(var(--orientation));
 }
 
@@ -44,25 +45,58 @@
   color: white;
 }
 
-
 .HUD {
   position: fixed;
-  padding: 40px;
-  bottom: 0px;
-  left: 19%;
-  width: 1000px;
-  height: 100px;
-  background-color: slategray;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  padding: 20px;
+  bottom: 20px;
+  left: 50%; /* move left end of div to center of screen */
+  width: 1000px; /*  move div half of it's own width left to center */
+  margin-left: -500px;
+  height: fit-content;
+  background-color: #0f0f0f;
+  box-shadow:
+  inset 0 0 2px 1px #0ff,
+  inset 0 0 3px 2px #fff,
+    0 0 10px 4px #0ff;
+  /* order: x offset, y offset, blur size, spread size, color */
+  /* blur and spread are optional and default to 0 */
+  border-radius: 10px;
+  animation: border-flicker 3s ease-in-out infinite;
+}
+
+.danger {
+  animation: danger-flicker 1s linear infinite;
+}
+
+#warning {
+  position: flex;
+  color: red;
+  justify-self: center;
+  animation: text-flicker 0.75s linear infinite;
+}
+
+.Status-container {
+  position: relative;
+  bottom: 0;
+  background-color: #000;
+  border: 2px solid #1b1b1b;
+  box-shadow: 
+    inset 1px -2px 8px 3px #1b1b1b,
+    0 0 3px 3px #0f0f0f;
+  border-radius: 25px;
+  margin: 4px auto;
+  width: 100%;
 }
 
 .Status-bar {
   display: flex;
-  position: fixed;
-  bottom: 10px;
-  justify-content: flex-end;
+  position: relative;
+  left: 0;
+  justify-content: flex-start;
   overflow: hidden;
+  font-style: italic;
+  font-weight: 300;
+  border-radius: 25px;
 }
 
 .Status-bar:nth-of-type(2) {
@@ -107,14 +141,6 @@
   font-size: 2em;
 }
 
-#warning {
-  color: red;
-  position: fixed;
-  bottom: 100px;
-  left: 510px;
-  font-size: 2em;
-}
-
 .intro {
   display: flex;
   background-color: #daca3c; 
@@ -136,4 +162,86 @@
 .scores {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+@keyframes border-flicker {
+  0% {
+    box-shadow:
+    inset 0 0 2px 1px #0ff,
+    inset 0 0 3px 2px #fff,
+      0 0 10px 4px #0ff;   
+  }
+  25% {
+    box-shadow:
+    inset 0 0 3px 2px #0ff,
+    inset 0 0 4px 3px #fff,
+      0 0 12px 6px #0ff;
+  }
+  50% {
+    box-shadow:
+    inset 0 0 4px 3px #0ff,
+    inset 0 0 5px 4px #fff,
+      0 0 14px 8px #0ff;
+  }
+  75% {
+    box-shadow:
+    inset 0 0 3px 2px #0ff,
+    inset 0 0 4px 3px #fff,
+      0 0 12px 6px #0ff;
+  }
+  100% {
+    box-shadow:
+    inset 0 0 2px 1px #0ff,
+    inset 0 0 3px 2px #fff,
+      0 0 10px 4px #0ff;
+  }
+}
+
+@keyframes danger-flicker {
+  0% {
+    box-shadow:
+    inset 0 0 2px 1px red,
+    inset 0 0 3px 2px #fff,
+      0 0 10px 4px red;   
+  }
+  25% {
+    box-shadow:
+    inset 0 0 3px 2px yellow,
+    inset 0 0 4px 3px #fff,
+      0 0 12px 6px red;
+  }
+  50% {
+    box-shadow:
+    inset 0 0 4px 3px red,
+    inset 0 0 5px 4px #fff,
+      0 0 14px 8px red;
+  }
+  75% {
+    box-shadow:
+    inset 0 0 3px 2px yellow,
+    inset 0 0 4px 3px #fff,
+      0 0 12px 6px yellow;
+  }
+  100% {
+    box-shadow:
+    inset 0 0 2px 1px red,
+    inset 0 0 3px 2px #fff,
+      0 0 10px 4px red;
+  }
+}
+
+@keyframes text-flicker {
+  0% {
+    opacity: 1;
+  }
+
+  33% {
+    opacity: 0,5;
+    text-shadow: 1px 1px 15px yellow;
+  }
+
+  66% {
+    opacity: 0.1;
+    text-shadow: 1px 1px 15px #f0f;
+  }
 }

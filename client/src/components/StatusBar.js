@@ -19,8 +19,8 @@ function StatusBar({resource, amount}) {
 	}
 
 	const setSize = amount => {
-		return amount + 'px'
-		// return amount / 10 + '%'
+		// return amount + 'px'
+		return amount / 10 + '%'
 	}
 	
 	const statusStyle = {
@@ -40,8 +40,10 @@ function StatusBar({resource, amount}) {
 	// give bar a measurement
 
 	return (
-		<div className="Status-bar" style={statusStyle}>
-			<p style={labelStyle}>{resource.charAt(0).toUpperCase() + resource.slice(1)}</p>
+		<div className="Status-container">
+			<div className="Status-bar" style={statusStyle}>
+				<p style={labelStyle}>{resource.charAt(0).toUpperCase() + resource.slice(1)}</p>
+			</div>
 		</div>
 	);
 }

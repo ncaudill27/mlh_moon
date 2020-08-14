@@ -30,9 +30,9 @@ class App extends Component {
 						<p>Maintain resources by flying over planets.</p>
 						<h5>Controls</h5>
 						<div className='controls'>
-							<h6>W</h6><p>Propels your ship forward. Hold down w at your own risk!</p>
-							<h6>A</h6><p>Key rotates to the left.</p>
-							<h6>D</h6><p>Key rotates to the right.</p>
+							<div><h6>W</h6><p>Propels your ship forward.</p><p>Hold down w at your own risk!</p></div>
+							<div><h6>A</h6><p>Key rotates to the left.</p></div>
+							<div><h6>D</h6><p>Key rotates to the right.</p></div>
 						</div>
 					</div>
 					<button id="startbutton" onClick={this.startGame}>Start</button>

@@ -162,6 +162,17 @@
   margin: 0 auto;
 }
 
+.controls {
+  width: 70%;
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  justify-content: space-around;
+}
+
+.controls > div > h6 {
+  border-bottom: 1px solid #ffee00;
+}
+
 .highscores {
   width: 40%;
   margin: 0 auto;

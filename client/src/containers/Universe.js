@@ -3,6 +3,7 @@ import { Howl, Howler } from 'howler';
 import space_music from '../space_music.mp3';
 import Ship from '../components/Ship';
 import Planet from '../components/Planet';
+import Score from '../components/Score';
 import HUD from '../components/HUD';
 import GameOver from '../components/GameOver';
 import generatePlanets from '../utils/generatePlanets';
@@ -140,15 +141,16 @@ class Universe extends Component {
 	}
 
 	render() {
-		const { water, food, medicine } = this.state;
+		const { water, food, medicine, score, isHighScore, gameOver, planetsArray } = this.state;
 
 		return (
 			<div className="Universe">
+				<Score score={score} />
 				<button id='mute' onClick={() => music.volume(0)}>MUTE</button>
 				<Ship findShip={this.findShip} />
-				{ this.state.planetsArray.length ? this.renderPlanets() : null }
+				{ planetsArray.length ? this.renderPlanets() : null }
 				<HUD water={water} food={food} medicine={medicine} />
-				{ this.state.gameOver ? <GameOver score={this.state.score} isHighScore={this.state.isHighScore} submitHighScore={this.submitHighScore} /> : null }
+				{ gameOver ? <GameOver score={score} isHighScore={isHighScore} submitHighScore={this.submitHighScore} /> : null }
 			</div>
 		)
 	}

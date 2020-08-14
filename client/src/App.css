@@ -100,31 +100,44 @@
 .Game-over {
   position: fixed;
   z-index: 2;
-  height: 250px;
+  height: fit-content;
   width: 350px; 
-  padding: 40px;
-  top: 40%;
+  padding: 20px;
+  top: 20%;
   left: 50%;
-  margin-left: -195px;
-  margin-top: -195px;
+  margin-left: -185px;
   background-color: #510086;
   border-color: #410569;
   color: white;
   text-align: center;
   border-radius: 10px;
+  box-shadow:
+  inset 0 0 2px 1px #ffee00,
+  inset 0 0 3px 2px #fff,
+    0 0 10px 4px #ffee00;
 }
 
-.Game-over input {
-  background-color: white;
+input {
+  margin: 1em;
+  width: 20%;
+  background-color: #743a9b;
+  border: none;
+  outline: none;
   color: black;
   padding: 10px;
+  transition: width 0.5s ease-in-out;
+}
+
+input:focus, input:active {
+  outline: 1px solid #ffee00;
+  width: 50%;
 }
 
 .Game-over button {
+  margin: 0.5em;
   background-color: #ffee00;
-  border-radius: 15px;
   filter: drop-shadow(0px, 0px, .5rem, #ffee00);
-  color: white;
+  color: black;
 }
 
 #mute {

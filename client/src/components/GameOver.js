@@ -18,7 +18,7 @@ function GameOver({score, isHighScore, submitHighScore}) {
     <br/>
     <input id='name' type='text' name='name' value={name} onChange={handleChange} required></input><br></br>
     <input type='hidden' name='score' value={score} />
-    <input type='submit' />
+    <button type='submit'>Submit</button>
   </form>
 
   return(

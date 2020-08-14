@@ -25,7 +25,7 @@ h2 { font-size: 2.2rem; }
 h3 { font-size: 1.7rem; }
 h4 { font-size: 1.35rem; }
 h5 { font-size: 1.2rem; }
-h6 { font-size: 1.2rem; }
+h6, button { font-size: 1.2rem; }
 /* ----------
 font weights
 ----------- */
@@ -34,7 +34,7 @@ h2 { font-weight: 700; }
 h3 { font-weight: 400; }
 h4 { font-weight: 400; }
 h5 { font-weight: 900; }
-h6 { font-weight: 700; }
+h6, button { font-weight: 700; }
 /* ---------
 spacing rules
 ---------- */
@@ -50,7 +50,7 @@ button:not(#mute) {
   margin: 0 auto;
   border-radius: 35px;
   border: none;
-  padding: 1em;
+  padding: 0.5em;
 }
 
 form {

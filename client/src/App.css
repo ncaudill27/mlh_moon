@@ -135,27 +135,44 @@
 }
 
 .Welcome {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  margin-left: -600px;
   display: flex;
-  margin: 0 auto;
-  width: 80%;
-  padding: 1em;
+  width: 1200px;
+  padding: 20px;
   justify-content: space-around;
+  border-radius: 10px;
   background-color: #0f0f0f; 
   color: #ffee00;
+  box-shadow:
+  inset 0 0 2px 1px #ffee00,
+  inset 0 0 3px 2px #fff,
+    0 0 10px 4px #ffee00;
 }
+
 .intro {
   display: block;
-  width: fit-content;
+  width: 60%;
+}
+
+.copy {
+  width: 90%;
+  margin: 0 auto;
 }
 
 .highscores {
-  width: fit-content;
+  width: 40%;
   margin: 0 auto;
 }
 
 .scores {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: stretch;
 }
 
 @keyframes border-flicker {

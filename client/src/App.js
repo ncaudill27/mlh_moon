@@ -23,15 +23,17 @@ class App extends Component {
 		return (
 			<div className="Welcome">
 				<div className='intro'>
-				<h1>Welcome to Hack the Planet!</h1>
+					<h1>Welcome to Hack the Planet!</h1>
 					<div className='copy'>
 						<p>Greetings, hero! You are the last hope for humanity. Please, stay alive so we can reach for the stars.</p>
 						<h5>Objectives</h5>
 						<p>Maintain resources by flying over planets.</p>
 						<h5>Controls</h5>
-						<p>'W' key propels your ship forward. Hold down w at your own risk!</p>
-						<p>'A' key rotates to the left.</p>
-						<p>'D' key rotates to the right.</p>
+						<div className='controls'>
+							<h6>W</h6><p>Propels your ship forward. Hold down w at your own risk!</p>
+							<h6>A</h6><p>Key rotates to the left.</p>
+							<h6>D</h6><p>Key rotates to the right.</p>
+						</div>
 					</div>
 					<button id="startbutton" onClick={this.startGame}>Start</button>
 				</div>

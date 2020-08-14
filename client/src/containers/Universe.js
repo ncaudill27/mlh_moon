@@ -145,12 +145,12 @@ class Universe extends Component {
 
 		return (
 			<div className="Universe">
-				<Score score={score} />
+				{ gameOver || <Score score={score} /> }
 				<button id='mute' onClick={() => music.volume(0)}>MUTE</button>
-				<Ship findShip={this.findShip} />
+				{ gameOver || <Ship findShip={this.findShip} /> }
 				{ planetsArray.length ? this.renderPlanets() : null }
-				<HUD water={water} food={food} medicine={medicine} />
-				{ gameOver ? <GameOver score={score} isHighScore={isHighScore} submitHighScore={this.submitHighScore} /> : null }
+				{ gameOver || <HUD water={water} food={food} medicine={medicine} /> }
+				{ !gameOver || <GameOver score={score} isHighScore={isHighScore} submitHighScore={this.submitHighScore} /> }
 			</div>
 		)
 	}

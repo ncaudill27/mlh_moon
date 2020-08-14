@@ -7,7 +7,7 @@ class App extends Component {
 	
 	state = {
 		highScores: [],
-		view: "intro"
+		view: "welcome"
 	}
 
 	componentDidMount() {
@@ -15,21 +15,24 @@ class App extends Component {
 		.then( highScores => this.setState({highScores}) )
 	}
 
-	toIntro = () => this.setState({view: 'intro'});
+	toIntro = () => this.setState({view: 'welcome'});
 	startGame = () => this.setState({view: "universe"});
 	
 
-	renderIntro = () => {
+	renderWelcome = () => {
 		return (
-			<div className="intro">
-				<div className='copy'>
-					<h1>Welcome to Hack the Planet!</h1>
-					<p>Greetings, hero! You are the last hope for humanity. Please, stay alive so we can reach for the stars.</p>
-					<p>Objectives: maintain resources by flying over planets.</p>
-					<p>Controls:</p>
-					<p>'W' key propels your ship forward. Hold down w at your own risk!</p>
-					<p>'A' key rotates to the left.</p>
-					<p>'D' key rotates to the right.</p>
+			<div className="Welcome">
+				<div className='intro'>
+				<h1>Welcome to Hack the Planet!</h1>
+					<div className='copy'>
+						<p>Greetings, hero! You are the last hope for humanity. Please, stay alive so we can reach for the stars.</p>
+						<h5>Objectives</h5>
+						<p>Maintain resources by flying over planets.</p>
+						<h5>Controls</h5>
+						<p>'W' key propels your ship forward. Hold down w at your own risk!</p>
+						<p>'A' key rotates to the left.</p>
+						<p>'D' key rotates to the right.</p>
+					</div>
 					<button id="startbutton" onClick={this.startGame}>Start</button>
 				</div>
 				<div className="highscores">
@@ -52,8 +55,8 @@ class App extends Component {
 
 	switch = () => {
 		switch (this.state.view) {
-			case 'intro':
-				return this.renderIntro();
+			case 'welcome':
+				return this.renderWelcome();
 			
 			case 'universe':
 				return <Universe highScores={this.state.highScores} addHighScore={this.addHighScore} />
